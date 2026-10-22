@@ -1,3 +1,6 @@
+import Image from "next/image";
+import type { Product } from "@/content/site";
+
 /**
  * Coded product interface previews. These are illustrative compositions with
  * sample data; replace with real screenshots once approved for publication.
@@ -100,77 +103,6 @@ export function ErpMockup({ className = "" }: { className?: string }) {
   );
 }
 
-const payments = [
-  ["Hodan Ali", "B2 · 4A", "EVC Plus", "$650", "RC-1043"],
-  ["Abdi Warsame", "B1 · 2C", "eDahab", "$480", "RC-1042"],
-  ["Nimco Yusuf", "B3 · 7B", "WaafiPay", "$720", "RC-1041"],
-  ["Farah Osman", "B1 · 1A", "Cash", "$390", "RC-1040"],
-] as const;
-
-export function PmsMockup({ className = "" }: { className?: string }) {
-  return (
-    <WindowChrome title="app.sukaan / overview" className={className}>
-      <div className="flex text-ink">
-        <aside className="hidden w-40 shrink-0 border-r border-black/6 bg-[#F4F6FA] p-3 sm:block">
-          <div className="mb-4 flex items-center gap-2 px-2 pt-1">
-            <span className="size-5 rounded-md bg-brand" />
-            <span className="text-[12px] font-semibold">Sukaan</span>
-          </div>
-          {["Overview", "Properties", "Tenants", "Invoices", "Payments", "Owners", "Maintenance", "Reports"].map((item, i) => (
-            <div
-              key={item}
-              className={`mb-0.5 flex items-center gap-2 rounded-md px-2 py-1.5 text-[11px] ${i === 0 ? "bg-brand-tint font-medium text-ink" : "text-ink-muted"}`}
-            >
-              <span className={`size-1.5 rounded-full ${i === 0 ? "bg-brand" : "bg-black/15"}`} />
-              {item}
-            </div>
-          ))}
-        </aside>
-        <div className="min-w-0 flex-1 p-4 sm:p-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-[13px] font-semibold tracking-tight">Portfolio overview</p>
-              <p className="text-[9.5px] text-ink-muted">3 buildings · 126 units · this month</p>
-            </div>
-            <span className="rounded-md bg-brand px-2.5 py-1 text-[10px] font-medium text-white">+ Record payment</span>
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-            {[
-              ["Occupancy", "94%", "118 of 126 units"],
-              ["Collected", "$48.6k", "82% of billed"],
-              ["Overdue", "$6.2k", "14 tenants"],
-              ["Maintenance", "9 open", "3 urgent"],
-            ].map(([k, v, s]) => (
-              <div key={k} className="rounded-lg border border-black/6 p-2.5">
-                <p className="text-[9.5px] text-ink-muted">{k}</p>
-                <p className="mt-1 text-[14px] font-semibold tracking-tight">{v}</p>
-                <p className="text-[9px] text-ink-muted">{s}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-3 rounded-lg border border-black/6">
-            <div className="flex items-center justify-between border-b border-black/6 px-3 py-2">
-              <p className="text-[10.5px] font-medium">Recent payments</p>
-              <p className="text-[9px] text-ink-muted">Reminders sent today: 32 SMS · 18 WhatsApp</p>
-            </div>
-            {payments.map(([tenant, unit, method, amount, receipt]) => (
-              <div key={receipt} className="grid grid-cols-[1.4fr_0.8fr_1fr_0.7fr] items-center gap-2 border-b border-black/5 px-3 py-1.5 text-[10px] last:border-0 sm:grid-cols-[1.4fr_0.8fr_1fr_0.7fr_0.8fr]">
-                <span className="truncate font-medium">{tenant}</span>
-                <span className="text-ink-muted">{unit}</span>
-                <span>
-                  <span className="rounded-full bg-[#F4F6FA] px-1.5 py-0.5 text-[8.5px] text-ink-soft ring-1 ring-black/5">{method}</span>
-                </span>
-                <span className="text-right font-semibold tabular-nums">{amount}</span>
-                <span className="hidden text-right font-mono text-[9px] text-ink-muted sm:block">{receipt}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </WindowChrome>
-  );
-}
-
 export function InvoiceMockup({ className = "" }: { className?: string }) {
   return (
     <WindowChrome title="invoice-generator / INV-0142" className={className}>
@@ -222,8 +154,16 @@ export function InvoiceMockup({ className = "" }: { className?: string }) {
   );
 }
 
-export function ProductMockup({ type, className }: { type: "erp" | "pms" | "invoice"; className?: string }) {
-  if (type === "pms") return <PmsMockup className={className} />;
-  if (type === "invoice") return <InvoiceMockup className={className} />;
+/** Real screenshot in a browser frame when we have one, otherwise the coded preview. */
+export function ProductMockup({ product, className = "" }: { product: Product; className?: string }) {
+  if (product.screenshot) {
+    const shot = product.screenshot;
+    return (
+      <WindowChrome title={shot.url} className={className}>
+        <Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(min-width: 1024px) 1024px, 100vw" className="block h-auto w-full" />
+      </WindowChrome>
+    );
+  }
+  if (product.mockup === "invoice") return <InvoiceMockup className={className} />;
   return <ErpMockup className={className} />;
 }

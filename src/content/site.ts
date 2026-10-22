@@ -266,7 +266,10 @@ export type Product = {
   capabilities: { title: string; body: string }[];
   availability: string;
   ownership: string;
-  mockup: "erp" | "pms" | "invoice";
+  /** Coded preview used when there is no approved screenshot. */
+  mockup?: "erp" | "invoice";
+  /** Real product screenshot, shown in place of the coded preview. */
+  screenshot?: { src: string; width: number; height: number; alt: string; url: string };
   externalUrl?: string;
   accent: string;
   /** Optional deep-dive sections shown on the product page. */
@@ -322,7 +325,14 @@ export const products: Product[] = [
     availability:
       "Available now as a cloud service. Techpoint handles setup, migration of existing tenant and lease records, and staff training.",
     ownership: "Designed, built and maintained by Techpoint Solutions.",
-    mockup: "pms",
+    // Client name, logo and user names are blurred in this capture.
+    screenshot: {
+      src: "/products/sukaan-dashboard.png",
+      width: 1017,
+      height: 640,
+      alt: "Sukaan dashboard showing apartments, occupancy, tenants, rent collected, deposits, utilities, outstanding balances, expenses and net income",
+      url: "app.sukaan / dashboard",
+    },
     accent: "#5B8CFF",
   },
   {

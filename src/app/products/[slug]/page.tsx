@@ -68,7 +68,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             </Reveal>
           </div>
           <Reveal delay={240} className="mx-auto mt-16 max-w-5xl">
-            <ProductMockup type={p.mockup} className="translate-y-px rounded-b-none" />
+            <ProductMockup product={p} className="translate-y-px rounded-b-none" />
           </Reveal>
         </div>
       </section>

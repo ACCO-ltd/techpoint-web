@@ -64,12 +64,12 @@ export default function ProductsPage() {
                   </span>
                 </div>
                 <div className={`lg:col-span-7 ${i % 2 ? "lg:order-1 lg:col-start-1" : ""}`}>
-                  <ProductMockup type={p.mockup} className="transition-transform duration-700 group-hover:-translate-y-1.5" />
+                  <ProductMockup product={p} className="transition-transform duration-700 group-hover:-translate-y-1.5" />
                 </div>
               </Link>
             </Reveal>
           ))}
-          <p className="pt-2 text-[13px] font-semibold text-ink-muted">Interface previews are illustrative and use sample data.</p>
+          <p className="pt-2 text-[13px] font-semibold text-ink-muted">Sukaan is shown from the live product, with client details blurred. Other previews are illustrative and use sample data.</p>
         </div>
       </section>
 

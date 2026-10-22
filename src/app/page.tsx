@@ -315,7 +315,7 @@ function Products() {
             </div>
             <div className="relative px-6 pb-0 sm:px-12 lg:col-span-7 lg:pt-12 lg:pr-0">
               <ProductMockup
-                type={featured.mockup}
+                product={featured}
                 className="translate-y-6 transition-transform duration-700 group-hover:translate-y-2 lg:rounded-r-none"
               />
             </div>
@@ -338,13 +338,13 @@ function Products() {
                   <p className="mt-3 max-w-md text-[15px] leading-relaxed text-on-dark-muted">{p.summary}</p>
                 </div>
                 <div className="mt-auto px-8 sm:px-10">
-                  <ProductMockup type={p.mockup} className="translate-y-4 rounded-b-none transition-transform duration-700 group-hover:translate-y-1" />
+                  <ProductMockup product={p} className="translate-y-4 rounded-b-none transition-transform duration-700 group-hover:translate-y-1" />
                 </div>
               </Link>
             </Reveal>
           ))}
         </div>
-        <p className="mt-6 text-[13px] font-semibold text-on-dark-muted">Interface previews are illustrative and use sample data.</p>
+        <p className="mt-6 text-[13px] font-semibold text-on-dark-muted">Sukaan is shown from the live product, with client details blurred. Other previews are illustrative and use sample data.</p>
       </div>
     </section>
   );
