@@ -33,7 +33,7 @@ production**, so leads are never silently lost.
 
 Everything marked `CONFIRM` in the code needs a decision before going live:
 
-- [ ] Product status, ownership and public URLs for Rukna, Dersify and Invoice Generator (`products` in `site.ts`; set `externalUrl` to show a "Visit" button)
+- [ ] Product status, ownership and public URLs for Sukaan, Rukna and Invoice generator (`products` in `site.ts`; set `externalUrl` to show a "Visit" button)
 - [ ] Replace illustrative product interfaces with approved real screenshots
 - [x] Logo, favicon, app icon and share image from Techpoint-Brand-Kit (`public/brand`, `src/app`)
 - [ ] Office city/address, phone, registration details, founding year, leadership profiles (`company` page)

@@ -266,13 +266,65 @@ export type Product = {
   capabilities: { title: string; body: string }[];
   availability: string;
   ownership: string;
-  mockup: "erp" | "lms" | "invoice";
+  mockup: "erp" | "pms" | "invoice";
   externalUrl?: string;
   accent: string;
+  /** Optional deep-dive sections shown on the product page. */
+  cycle?: { title: string; body: string }[];
+  roles?: { role: string; sees: string }[];
+  paymentMethods?: string[];
+  isolation?: string;
 };
 
 // CONFIRM: product status, ownership, scope and public URLs for each product.
 export const products: Product[] = [
+  {
+    slug: "sukaan",
+    name: "Sukaan",
+    category: "Property management",
+    status: "Live",
+    tagline: "Buildings, tenants and money in one place.",
+    summary:
+      "A complete, cloud-based system for property management companies. Sukaan replaces spreadsheets, paper receipt books and scattered WhatsApp messages with one place to run buildings, tenants and finances.",
+    problem:
+      "Property companies often track leases in spreadsheets, write receipts from paper books and chase rent over WhatsApp. Sukaan runs the whole monthly cycle in one system, from billing and reminders to collection and owner reporting, with a numbered record of every payment.",
+    audiences: ["Property management companies", "Building owners", "Real estate developers", "Utility providers"],
+    capabilities: [
+      { title: "Properties & units", body: "Buildings, floors and apartments, with occupancy at a glance." },
+      { title: "Leases & rent schedules", body: "Sign a tenant to a lease and the rent schedule is created automatically." },
+      { title: "Automatic invoicing", body: "Rent, deposits and utilities on one invoice, generated every month." },
+      { title: "Reminders", body: "SMS, WhatsApp and email, sent by hand or automatically before and after the due date." },
+      { title: "Local payments", body: "Cash, EVC Plus, eDahab, bank or online through WaafiPay, with a numbered receipt every time." },
+      { title: "Payables", body: "Pay owners, suppliers and staff from your money accounts." },
+      { title: "Owner reporting", body: "Owner statements, collection reports and profit and loss." },
+      { title: "Staff & payroll", body: "Staff records and payroll alongside property operations." },
+      { title: "Maintenance", body: "Requests from owners and tenants, tracked through to completion." },
+    ],
+    cycle: [
+      { title: "Set up", body: "Add buildings, floors and apartments." },
+      { title: "Lease", body: "Register tenants and sign leases. Rent schedules are created automatically." },
+      { title: "Bill", body: "Rent, deposits and utilities go out on one invoice each month." },
+      { title: "Remind", body: "SMS, WhatsApp and email reminders, manual or automatic." },
+      { title: "Collect", body: "Cash, EVC Plus, eDahab, bank or WaafiPay, each with a numbered receipt." },
+      { title: "Pay", body: "Settle owners, suppliers and staff from your money accounts." },
+      { title: "Report", body: "Statements, collection reports and profit and loss for owners and management." },
+    ],
+    roles: [
+      { role: "Company administrator", sees: "The full system: property, tenants, finance, staff and payroll, operations, reports and settings." },
+      { role: "Building manager", sees: "The same tools, limited to the buildings they are assigned to." },
+      { role: "Property owner", sees: "Their own units, their statement and their maintenance requests." },
+      { role: "Tenant", sees: "Their lease, invoices, payments, utility bills and maintenance requests." },
+      { role: "Utility provider", sees: "A separate portal to bill water, electricity or waste for the units they serve." },
+    ],
+    paymentMethods: ["Cash", "EVC Plus", "eDahab", "Bank transfer", "WaafiPay"],
+    isolation:
+      "Every company is separate. Each company's data, users, branding and integrations are private to that company.",
+    availability:
+      "Available now as a cloud service. Techpoint handles setup, migration of existing tenant and lease records, and staff training.",
+    ownership: "Designed, built and maintained by Techpoint Solutions.",
+    mockup: "pms",
+    accent: "#5B8CFF",
+  },
   {
     slug: "rukna",
     name: "Rukna",
@@ -296,31 +348,6 @@ export const products: Product[] = [
       "Currently deployed with selected organizations. Implementation is delivered by Techpoint, including configuration, data migration and training.",
     ownership: "Developed and maintained by Techpoint Solutions.",
     mockup: "erp",
-    accent: "#5B8CFF",
-  },
-  {
-    slug: "dersify",
-    name: "Dersify",
-    category: "Education technology",
-    status: "In development",
-    tagline: "Learning and academic operations, connected.",
-    summary:
-      "A learning and academic platform for schools, institutes and universities — courses, assessments, student progress and academic administration.",
-    problem:
-      "Institutions juggle separate tools for teaching, assessment and records. Dersify connects learning delivery with academic administration so staff and students work from the same information.",
-    audiences: ["Universities", "Colleges & institutes", "Training providers"],
-    capabilities: [
-      { title: "Courses & content", body: "Structured courses, materials and schedules." },
-      { title: "Assessments", body: "Assignments, quizzes and grading workflows." },
-      { title: "Student progress", body: "Attendance, results and progress tracking." },
-      { title: "Academic records", body: "Enrolment, programmes and transcripts." },
-      { title: "Communication", body: "Announcements for classes and cohorts." },
-      { title: "Role-based access", body: "Separate views for students, lecturers and administrators." },
-    ],
-    availability:
-      "In active development. Institutions interested in early access or a guided pilot can request a conversation.",
-    ownership: "Developed by Techpoint Solutions.",
-    mockup: "lms",
     accent: "#5B8CFF",
   },
   {

@@ -94,6 +94,26 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         </div>
       </section>
 
+      {p.cycle && (
+        <section className="relative isolate overflow-hidden bg-night py-20 text-on-dark sm:py-28">
+          <div className="grid-lines absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
+          <div className="container-x">
+            <Reveal>
+              <SectionHeading tone="light" eyebrow="How it works" title="The monthly cycle, handled for you." />
+            </Reveal>
+            <ol className="mt-14 grid gap-px overflow-hidden rounded-xl bg-night-line ring-1 ring-night-line sm:grid-cols-2 lg:grid-cols-7">
+              {p.cycle.map((step, i) => (
+                <Reveal as="li" key={step.title} delay={i * 50} className="relative bg-night p-6">
+                  <span className="grid size-8 place-items-center rounded-full bg-brand text-[13px] font-semibold text-white tabular-nums">{i + 1}</span>
+                  <h3 className="mt-6 text-[18px] tracking-[-0.015em]">{step.title}</h3>
+                  <p className="mt-2 text-[14px] leading-[22px] text-on-dark-muted">{step.body}</p>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
       <section className="bg-surface-raised py-20 sm:py-28">
         <div className="container-x">
           <Reveal>
@@ -115,7 +135,50 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         </div>
       </section>
 
-      <section className="bg-surface py-20 sm:py-28">
+      {p.roles && (
+        <section className="bg-surface py-20 sm:py-28">
+          <div className="container-x grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <Reveal>
+                <SectionHeading eyebrow="Who uses it" title="One system, a view for every role." intro="Each person sees exactly what their role needs, and nothing more." />
+              </Reveal>
+              {p.isolation && (
+                <Reveal delay={80} className="mt-10 rounded-xl bg-ink p-7 text-on-dark">
+                  <span className="grid size-10 place-items-center rounded-xl bg-night-raised text-brand-light">
+                    <Icon name="lock" className="size-5" />
+                  </span>
+                  <p className="mt-5 text-[18px] leading-[28px] font-medium">{p.isolation}</p>
+                </Reveal>
+              )}
+              {p.paymentMethods && (
+                <Reveal delay={120} className="mt-4 rounded-xl bg-surface-raised p-7 ring-1 ring-line">
+                  <p className="text-[13px] font-semibold text-ink-muted">Accepted payment methods</p>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {p.paymentMethods.map((m) => (
+                      <li key={m} className="rounded-full bg-white px-3.5 py-1.5 text-[14px] font-medium text-ink ring-1 ring-line">
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-4 text-[14px] text-ink-muted">A numbered receipt is issued for every payment.</p>
+                </Reveal>
+              )}
+            </div>
+            <Reveal delay={60} className="lg:col-span-7">
+              <dl className="divide-y divide-line overflow-hidden rounded-xl ring-1 ring-line">
+                {p.roles.map((r) => (
+                  <div key={r.role} className="grid gap-2 bg-white p-6 sm:grid-cols-[200px_1fr] sm:gap-6">
+                    <dt className="text-[15px] font-semibold">{r.role}</dt>
+                    <dd className="text-[15px] leading-relaxed text-ink-muted">{r.sees}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      <section className={`${p.roles ? "bg-surface-raised" : "bg-surface"} py-20 sm:py-28`}>
         <div className="container-x grid gap-4 lg:grid-cols-2">
           <Reveal className="rounded-3xl bg-ink p-8 text-on-dark sm:p-12">
             <Eyebrow tone="light">Availability</Eyebrow>
@@ -140,7 +203,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           <p className="text-[13px] font-semibold text-ink-muted">More from the portfolio</p>
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             {others.map((o) => (
-              <Link key={o.slug} href={`/products/${o.slug}`} className="group flex items-center justify-between gap-6 rounded-3xl bg-surface-raised p-7 ring-1 ring-line transition-colors hover:bg-white">
+              <Link key={o.slug} href={`/products/${o.slug}`} className="group flex items-center justify-between gap-6 rounded-3xl bg-white p-7 ring-1 ring-line transition-shadow hover:ring-brand/30">
                 <div>
                   <StatusPill status={o.status} />
                   <p className="mt-4 text-2xl font-semibold tracking-tight">{o.name}</p>
