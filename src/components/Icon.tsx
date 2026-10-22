@@ -1,0 +1,75 @@
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  BriefcaseBusiness,
+  Building2,
+  ChartColumn,
+  Check,
+  Clock,
+  Code,
+  Compass,
+  Factory,
+  FileText,
+  GraduationCap,
+  Layers,
+  Link,
+  Lock,
+  Mail,
+  MapPin,
+  Menu,
+  Package,
+  Plus,
+  Server,
+  ShieldCheck,
+  ShoppingCart,
+  Sparkles,
+  Truck,
+  Users,
+  Workflow,
+  Wrench,
+  X,
+  type LucideIcon,
+} from "lucide-react";
+import type { IconName } from "@/content/site";
+
+// Brand iconography: Lucide, 1.5px rounded strokes on a 24px grid.
+const icons: Record<IconName | "arrow" | "arrow-up-right" | "menu" | "close" | "mail" | "pin" | "plus", LucideIcon> = {
+  layers: Layers,
+  code: Code,
+  link: Link,
+  spark: Sparkles,
+  shield: ShieldCheck,
+  server: Server,
+  chart: ChartColumn,
+  users: Users,
+  box: Package,
+  cart: ShoppingCart,
+  book: BookOpen,
+  doc: FileText,
+  flow: Workflow,
+  check: Check,
+  clock: Clock,
+  lock: Lock,
+  compass: Compass,
+  wrench: Wrench,
+  graduation: GraduationCap,
+  building: Building2,
+  truck: Truck,
+  factory: Factory,
+  briefcase: BriefcaseBusiness,
+  arrow: ArrowRight,
+  "arrow-up-right": ArrowUpRight,
+  menu: Menu,
+  close: X,
+  mail: Mail,
+  pin: MapPin,
+  plus: Plus,
+};
+
+export type AnyIcon = keyof typeof icons;
+
+export function Icon({ name, className = "size-5" }: { name: AnyIcon; className?: string }) {
+  const Cmp = icons[name];
+  return <Cmp className={className} strokeWidth={1.5} aria-hidden="true" />;
+}

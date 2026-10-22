@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Techpoint Solutions — corporate website
 
-## Getting Started
-
-First, run the development server:
+Next.js 16 (App Router, Cache Components) · TypeScript · Tailwind CSS v4 · Zod.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Windows note: Hyper-V reserves some port ranges (check with
+> `netsh interface ipv4 show excludedportrange protocol=tcp`). If a port fails
+> with `EACCES`, use another, e.g. `npm run dev -- -p 4321`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where things live
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | Purpose |
+| --- | --- |
+| `src/content/site.ts` | **All public copy**: company details, solutions, products, process, principles. Edit here, not in pages. |
+| `src/app/*` | Pages: home, solutions (+5 detail pages), products (+detail pages), how-we-work, company, contact, privacy |
+| `src/app/contact/` | Multi-step project enquiry: client form, Zod schema, server action |
+| `src/lib/enquiry-delivery.ts` | Sends enquiries by email (Resend). Swap for a CRM later. |
+| `src/components/illustrations/` | Animated systems map, coded product interfaces, solution diagrams |
+| `public/images/` | Photography (Unsplash licence) |
 
-## Learn More
+## Environment
 
-To learn more about Next.js, take a look at the following resources:
+Copy `.env.example` to `.env.local`. Without `RESEND_API_KEY` and
+`ENQUIRY_TO_EMAIL`, enquiries are **logged in development** and **rejected in
+production**, so leads are never silently lost.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Launch checklist
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Everything marked `CONFIRM` in the code needs a decision before going live:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Product status, ownership and public URLs for Rukna, Dersify and Invoice Generator (`products` in `site.ts`; set `externalUrl` to show a "Visit" button)
+- [ ] Replace illustrative product interfaces with approved real screenshots
+- [x] Logo, favicon, app icon and share image from Techpoint-Brand-Kit (`public/brand`, `src/app`)
+- [ ] Office city/address, phone, registration details, founding year, leadership profiles (`company` page)
+- [ ] Response-time commitment (`company.responseTime`, currently "two business days")
+- [ ] Production domain (`NEXT_PUBLIC_SITE_URL`), verified sending domain in Resend
+- [ ] Privacy notice reviewed
+- [ ] Privacy-conscious analytics with an enquiry-submitted conversion event
+- [ ] Named owner for incoming enquiries and content updates
+- [ ] Case studies — add only with client approval and verified outcomes
