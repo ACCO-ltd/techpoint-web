@@ -61,6 +61,11 @@ export function Footer() {
           </div>
         </div>
 
+        <div aria-hidden="true" className="pointer-events-none select-none overflow-hidden pt-10">
+          <p className="bg-gradient-to-b from-white/[0.1] to-transparent bg-clip-text text-center font-display text-[19vw] leading-[0.8] font-semibold tracking-[-0.05em] text-transparent">
+            Techpoint
+          </p>
+        </div>
 
         <div className="flex flex-col gap-3 py-8 text-[13px] text-on-dark-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {company.name}. All rights reserved.</p>

@@ -105,7 +105,7 @@ export function Header() {
         <div className="grid-lines absolute inset-0 opacity-60" aria-hidden="true" />
         <nav aria-label="Mobile" className="container-x relative flex h-full flex-col pt-28 pb-10">
           <ul className="space-y-1">
-            {[{ label: "Home", href: "/" }, ...nav].map((item, i) => (
+            {nav.map((item, i) => (
               <li
                 key={item.href}
                 className="transition-all duration-500"
