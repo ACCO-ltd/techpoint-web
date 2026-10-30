@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...products.map((p) => `/products/${p.slug}`),
     "/how-we-work",
     "/company",
+    "/our-work",
     "/contact",
     "/privacy",
   ];

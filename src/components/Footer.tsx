@@ -17,6 +17,7 @@ const columns = [
     links: [
       { label: "About Techpoint", href: "/company" },
       { label: "How we work", href: "/how-we-work" },
+      { label: "Our work", href: "/our-work" },
       { label: "Discuss a project", href: "/contact" },
       { label: "Privacy", href: "/privacy" },
     ],
@@ -31,7 +32,8 @@ export function Footer() {
         <div className="grid gap-14 border-b border-night-line py-20 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Logo tone="light" className="h-9 w-auto" />
-            <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-on-dark-muted">{company.description}</p>
+            <p className="mt-6 font-display text-[20px] leading-snug font-semibold tracking-tight">{company.tagline}</p>
+            <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-on-dark-muted">{company.description}</p>
             <div className="mt-8 space-y-3 text-[15px]">
               <a href={`mailto:${company.email}`} className="flex items-center gap-3 text-on-dark/80 transition-colors hover:text-on-dark">
                 <Icon name="mail" className="size-4 text-brand-light" />
@@ -69,7 +71,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-3 py-8 text-[13px] text-on-dark-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {company.name}. All rights reserved.</p>
-          <p>{company.tagline}</p>
+          <p>{company.positioning}</p>
         </div>
       </div>
     </footer>

@@ -3,9 +3,41 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { nav } from "@/content/site";
+import { company, nav, solutions } from "@/content/site";
 import { Icon } from "./Icon";
 import { Logo } from "./Logo";
+
+/** Desktop dropdown listing the six practices. Opens on hover and on keyboard focus. */
+function SolutionsMenu() {
+  return (
+    <div className="invisible absolute top-full left-1/2 w-[720px] -translate-x-1/2 pt-4 opacity-0 transition-[opacity,visibility,translate] duration-300 group-focus-within/menu:visible group-focus-within/menu:opacity-100 group-hover/menu:visible group-hover/menu:opacity-100">
+      <div className="overflow-hidden rounded-2xl bg-white text-ink shadow-[0_32px_64px_-24px_rgba(11,18,32,0.35)] ring-1 ring-line">
+        <ul className="grid grid-cols-2 gap-1 p-3">
+          {solutions.map((s) => (
+            <li key={s.slug}>
+              <Link href={`/solutions/${s.slug}`} className="group/item flex gap-4 rounded-xl p-4 transition-colors hover:bg-surface-raised">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-tint text-brand transition-colors group-hover/item:bg-ink group-hover/item:text-brand-light">
+                  <Icon name={s.icon} className="size-[18px]" />
+                </span>
+                <span>
+                  <span className="block text-[14px] leading-snug font-semibold tracking-tight">{s.name}</span>
+                  <span className="mt-1 block text-[13px] leading-snug text-ink-muted">{s.short}</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center justify-between border-t border-line bg-surface-raised px-7 py-4">
+          <p className="text-[13px] text-ink-muted">{company.tagline}</p>
+          <Link href="/solutions" className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand hover:text-brand-strong">
+            All solutions
+            <Icon name="arrow" className="size-3.5" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -45,29 +77,35 @@ export function Header() {
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            {nav.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`relative rounded-full px-4 py-2 text-[15px] font-medium tracking-[-0.01em] transition-colors ${
-                    solid
-                      ? isActive(item.href)
-                        ? "text-ink"
-                        : "text-ink-soft hover:text-ink"
-                      : isActive(item.href)
-                        ? "text-on-dark"
-                        : "text-on-dark/70 hover:text-on-dark"
-                  }`}
-                >
-                  {item.label}
-                  {isActive(item.href) && (
-                    <span className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-brand" aria-hidden="true" />
-                  )}
-                </Link>
-              </li>
-            ))}
+          <ul className="flex items-center">
+            {nav.map((item) => {
+              const hasMenu = item.href === "/solutions";
+              return (
+                // Remounting the menu item on navigation drops focus, so the dropdown closes.
+                <li key={hasMenu ? `${item.href}:${pathname}` : item.href} className={hasMenu ? "group/menu relative" : undefined}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                    className={`relative inline-flex items-center gap-1 rounded-full px-3 py-2 text-[15px] font-medium tracking-[-0.01em] transition-colors xl:px-4 ${
+                      solid
+                        ? isActive(item.href)
+                          ? "text-ink"
+                          : "text-ink-soft hover:text-ink"
+                        : isActive(item.href)
+                          ? "text-on-dark"
+                          : "text-on-dark/70 hover:text-on-dark"
+                    }`}
+                  >
+                    {item.label}
+                    {hasMenu && <Icon name="chevron" className="size-3.5 opacity-60 transition-transform group-hover/menu:rotate-180" />}
+                    {isActive(item.href) && (
+                      <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-brand xl:inset-x-4" aria-hidden="true" />
+                    )}
+                  </Link>
+                  {hasMenu && <SolutionsMenu />}
+                </li>
+              );
+            })}
           </ul>
         </nav>
 

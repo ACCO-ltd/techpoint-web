@@ -8,7 +8,7 @@ import { SystemsMap } from "@/components/illustrations/SystemsMap";
 import { Reveal } from "@/components/Reveal";
 import { CheckList, CtaBand } from "@/components/sections";
 import { Accent, Button, Eyebrow, SectionHeading, StatusPill } from "@/components/ui";
-import { industries, principles, problems, deliveryProcess, products, solutions } from "@/content/site";
+import { company, deliveryProcess, differentiators, industries, problems, products, solutions } from "@/content/site";
 
 export default function HomePage() {
   return (
@@ -17,10 +17,10 @@ export default function HomePage() {
       <ClientMarquee />
       <Problems />
       <Capabilities />
+      <Difference />
       <Industries />
       <Products />
       <Approach />
-      <Trust />
       <Partnership />
       <CtaBand />
     </>
@@ -38,17 +38,17 @@ function Hero() {
       <div className="container-x grid min-h-[100svh] items-center gap-12 pt-32 pb-20 lg:grid-cols-12 lg:gap-6 lg:pt-28">
         <div className="lg:col-span-6 xl:col-span-6">
           <Reveal>
-            <Eyebrow tone="light">Enterprise Software · Business Systems · Applied AI</Eyebrow>
+            <Eyebrow tone="light">{company.positioning}</Eyebrow>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mt-6 text-balance text-[40px] leading-[1.06] tracking-[-0.025em] sm:text-[52px] lg:text-[56px]">
-              Enterprise technology, built around your <Accent>business.</Accent>
+            <h1 className="mt-6 text-balance text-[44px] leading-[1.04] tracking-[-0.03em] sm:text-[56px] lg:text-[64px]">
+              Technology that moves business <Accent>forward.</Accent>
             </h1>
           </Reveal>
           <Reveal delay={160}>
             <p className="mt-8 max-w-xl text-pretty text-lg leading-relaxed text-on-dark-muted sm:text-xl">
-              Techpoint Solutions helps organizations design, implement and evolve business software, connected systems and
-              practical AI — and supports them long after launch.
+              We help organizations modernize operations, strengthen digital capabilities, manage risk and grow sustainably — with
+              dependable software, secure infrastructure and practical AI.
             </p>
           </Reveal>
           <Reveal delay={240} className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -62,8 +62,8 @@ function Hero() {
           <Reveal delay={320}>
             <dl className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
               {[
-                ["Discovery-led", "Requirements before code"],
-                ["Secure by default", "Roles, audit, backups"],
+                ["Outcome-led", "Success agreed up front"],
+                ["Secure by design", "Access, audit, recovery"],
                 ["Long-term", "Support beyond launch"],
               ].map(([t, d]) => (
                 <div key={t}>
@@ -163,19 +163,19 @@ function Problems() {
 }
 
 function Capabilities() {
-  const [lead, ...rest] = solutions;
   return (
     <section className="bg-surface-raised py-24 sm:py-32">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <Reveal>
             <SectionHeading
-              eyebrow="Solutions & capabilities"
+              eyebrow="Six strategic practices"
               title={
                 <>
-                  From business challenges to <Accent>working systems.</Accent>
+                  One partner across your <Accent>entire technology estate.</Accent>
                 </>
               }
+              intro="From the infrastructure your systems run on to the data your leaders decide with — six practices, delivered by one accountable team."
             />
           </Reveal>
           <Reveal delay={100}>
@@ -185,13 +185,10 @@ function Capabilities() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
-          <Reveal className="md:col-span-2 lg:row-span-2">
-            <SolutionTile solution={lead} large />
-          </Reveal>
-          {rest.map((s, i) => (
-            <Reveal key={s.slug} delay={(i + 1) * 70}>
-              <SolutionTile solution={s} />
+        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {solutions.map((s, i) => (
+            <Reveal key={s.slug} delay={(i % 3) * 70} className="h-full">
+              <SolutionTile solution={s} index={i} />
             </Reveal>
           ))}
         </div>
@@ -200,38 +197,81 @@ function Capabilities() {
   );
 }
 
-function SolutionTile({ solution: s, large }: { solution: (typeof solutions)[number]; large?: boolean }) {
+function SolutionTile({ solution: s, index }: { solution: (typeof solutions)[number]; index: number }) {
   return (
     <Link
       href={`/solutions/${s.slug}`}
-      className={`group relative isolate flex h-full flex-col justify-end overflow-hidden rounded-3xl bg-night p-7 text-on-dark ${large ? "min-h-[440px] sm:p-10 lg:min-h-[600px]" : "min-h-[290px]"}`}
+      className="group relative isolate flex h-full min-h-[380px] flex-col overflow-hidden rounded-3xl bg-night p-7 text-on-dark sm:p-8"
     >
       <Image
         src={s.image}
         alt=""
         fill
-        sizes={large ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
-        className="-z-20 object-cover opacity-55 transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]"
+        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+        className="-z-20 object-cover opacity-40 transition-[transform,opacity] duration-[1.2s] ease-out group-hover:scale-[1.06] group-hover:opacity-30"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/75 to-night/10" aria-hidden="true" />
-      <span className="absolute top-6 left-6 grid size-11 place-items-center rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md sm:top-7 sm:left-7">
-        <Icon name={s.icon} className="size-5 text-brand-light" />
-      </span>
-      <span className="absolute top-6 right-6 grid size-10 place-items-center rounded-full bg-surface text-night opacity-0 transition-all duration-500 group-hover:opacity-100 sm:top-7 sm:right-7">
-        <Icon name="arrow-up-right" className="size-4" />
-      </span>
-      <h3 className={`font-semibold tracking-[-0.025em] ${large ? "text-[30px] leading-[1.15] tracking-[-0.025em] sm:text-[36px]" : "text-[20px] leading-tight tracking-[-0.02em]"}`}>{s.name}</h3>
-      <p className={`mt-3 text-on-dark-muted ${large ? "max-w-md text-[18px] leading-relaxed" : "text-[15px] leading-relaxed"}`}>{s.short}</p>
-      {large && (
-        <ul className="mt-7 flex flex-wrap gap-2">
-          {s.capabilities.slice(0, 5).map((c) => (
-            <li key={c.title} className="rounded-full border border-white/15 bg-white/6 px-3 py-1.5 text-[12px] text-on-dark/85 backdrop-blur-sm">
-              {c.title}
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/85 to-night/30" aria-hidden="true" />
+      <div className="flex items-start justify-between">
+        <span className="grid size-11 place-items-center rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md">
+          <Icon name={s.icon} className="size-5 text-brand-light" />
+        </span>
+        <span className="text-[13px] font-semibold tabular-nums text-on-dark-muted">
+          0{index + 1} / 0{solutions.length}
+        </span>
+      </div>
+      <div className="mt-auto pt-16">
+        <h3 className="text-[22px] leading-[1.2] font-semibold tracking-[-0.02em]">{s.name}</h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-on-dark-muted">{s.short}</p>
+        <span className="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-brand-light transition-colors group-hover:text-on-dark">
+          Explore the practice
+          <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
+        </span>
+      </div>
     </Link>
+  );
+}
+
+/** Corporate profile, page 13: our difference is how we deliver, not simply what we sell. */
+function Difference() {
+  return (
+    <section className="relative isolate overflow-hidden bg-night py-24 text-on-dark sm:py-32">
+      <div className="grid-lines absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent)]" aria-hidden="true" />
+      <div className="container-x">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+          <Reveal className="lg:col-span-7">
+            <SectionHeading
+              tone="light"
+              eyebrow="Why Techpoint"
+              title={
+                <>
+                  Our difference is how we deliver, <Accent>not simply what we sell.</Accent>
+                </>
+              }
+            />
+          </Reveal>
+          <Reveal delay={100} className="lg:col-span-5">
+            <p className="text-[18px] leading-relaxed text-on-dark-muted">
+              Many firms can supply technology. We are accountable for whether it works for your organization — from the first
+              requirement to years of support after launch.
+            </p>
+          </Reveal>
+        </div>
+        <ol className="mt-16 grid gap-px overflow-hidden rounded-3xl bg-night-line ring-1 ring-night-line sm:grid-cols-2 lg:grid-cols-5">
+          {differentiators.map((d, i) => (
+            <Reveal as="li" key={d.title} delay={i * 60} className="group flex flex-col bg-night p-7 transition-colors duration-500 hover:bg-night-raised">
+              <div className="flex items-center justify-between">
+                <span className="grid size-11 place-items-center rounded-2xl bg-brand-light/10 text-brand-light ring-1 ring-brand-light/20">
+                  <Icon name={d.icon} className="size-5" />
+                </span>
+                <span className="text-[13px] font-semibold tabular-nums text-on-dark-muted">0{i + 1}</span>
+              </div>
+              <h3 className="mt-10 text-[19px] leading-snug font-semibold tracking-tight">{d.title}</h3>
+              <p className="mt-2.5 text-[14px] leading-relaxed text-on-dark-muted">{d.body}</p>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
+    </section>
   );
 }
 
@@ -285,7 +325,7 @@ function Products() {
                   Purpose-built products. <Accent>One engineering mindset.</Accent>
                 </>
               }
-              intro="Our products demonstrate what we build and maintain — each with a clear purpose, audience and availability status."
+              intro="Alongside consulting and implementation, we build and operate our own software. Each product has a clear purpose, audience and availability status."
             />
           </Reveal>
           <Reveal delay={100}>
@@ -391,48 +431,9 @@ function Approach() {
   );
 }
 
-function Trust() {
-  return (
-    <section className="bg-surface-raised py-24 sm:py-32">
-      <div className="container-x grid gap-14 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Why organizations trust us"
-              title="Evidence over slogans."
-              intro="Trust comes from how we work, not from how loudly we claim it. These are the engineering commitments behind every system we deliver."
-            />
-          </Reveal>
-          <Reveal delay={100} className="relative mt-10 aspect-[5/4] overflow-hidden rounded-3xl">
-            <Image src="/images/team-laptops.jpg" alt="Engineering team collaborating on laptops" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
-            <div className="absolute inset-x-4 bottom-4 rounded-2xl bg-surface/95 p-5 backdrop-blur">
-              <p className="text-[15px] leading-snug font-medium text-ink">
-                Product walkthroughs and relevant delivery examples are shared during discovery — with client permission where required.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-          {principles.map((p, i) => (
-            <Reveal key={p.title} delay={(i % 2) * 80}>
-              <div className="h-full rounded-3xl bg-white p-7 ring-1 ring-line transition-shadow duration-500 hover:shadow-[0_24px_48px_-24px_rgba(11,18,32,0.25)]">
-                <span className="grid size-11 place-items-center rounded-2xl bg-ink text-brand-light">
-                  <Icon name={p.icon} className="size-5" />
-                </span>
-                <h3 className="mt-6 text-[20px] font-semibold tracking-tight">{p.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{p.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Partnership() {
   return (
-    <section className="bg-surface py-24 sm:py-32">
+    <section className="bg-surface-raised py-24 sm:py-32">
       <div className="container-x grid items-center gap-14 lg:grid-cols-2">
         <Reveal className="order-2 lg:order-1">
           <LifecycleDiagram className="mx-auto w-full max-w-[520px]" />
@@ -461,8 +462,8 @@ function Partnership() {
             />
           </Reveal>
           <Reveal delay={160} className="mt-10">
-            <Button href="/solutions/implementation-support" variant="dark">
-              Implementation & support
+            <Button href="/solutions/it-consulting" variant="dark">
+              Managed technology services
             </Button>
           </Reveal>
         </div>

@@ -6,8 +6,8 @@ import { Icon } from "@/components/Icon";
 import { SolutionDiagram } from "@/components/illustrations/Diagrams";
 import { Reveal } from "@/components/Reveal";
 import { CheckList, CtaBand, PageHero } from "@/components/sections";
-import { Button, Eyebrow, SectionHeading } from "@/components/ui";
-import { deliveryProcess, solutions } from "@/content/site";
+import { Accent, Button, Eyebrow, SectionHeading, StatusPill } from "@/components/ui";
+import { deliveryProcess, products, solutions } from "@/content/site";
 
 export function generateStaticParams() {
   return solutions.map((s) => ({ slug: s.slug }));
@@ -29,6 +29,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
   const s = solutions.find((x) => x.slug === slug);
   if (!s) notFound();
   const others = solutions.filter((x) => x.slug !== s.slug);
+  const related = products.filter((p) => s.relatedProducts?.includes(p.slug));
 
   return (
     <>
@@ -47,7 +48,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
       <section className="bg-surface py-20 sm:py-28">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
-            <SectionHeading eyebrow="When to consider it" title="Signs this is the right next step." />
+            <SectionHeading eyebrow="Business problems we solve" title="Signs this is the right next step." />
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
             {s.signals.map((sig, i) => (
@@ -94,6 +95,33 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
         </div>
       </section>
 
+      {/* Outcomes */}
+      <section className="bg-surface-raised py-20 sm:py-28">
+        <div className="container-x grid gap-12 lg:grid-cols-12">
+          <Reveal className="lg:col-span-5">
+            <SectionHeading
+              eyebrow="Business outcomes"
+              title={
+                <>
+                  What changes <Accent>for your organization.</Accent>
+                </>
+              }
+              intro="We agree the outcomes and how they will be measured during discovery, before any build begins."
+            />
+          </Reveal>
+          <ol className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+            {s.outcomes.map((o, i) => (
+              <Reveal as="li" key={o} delay={i * 60} className="flex h-full flex-col rounded-3xl bg-white p-7 ring-1 ring-line">
+                <span className="grid size-9 place-items-center rounded-full bg-signal/10 text-[#00835C]">
+                  <Icon name="check" className="size-4" />
+                </span>
+                <p className="mt-8 text-[18px] leading-snug font-medium tracking-tight text-ink">{o}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* Deliverables */}
       <section className="relative isolate overflow-hidden bg-night py-20 text-on-dark sm:py-28">
         <div className="grid-lines absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
@@ -131,13 +159,41 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
         </div>
       </section>
 
+      {related.length > 0 && (
+        <section className="bg-surface pt-20 sm:pt-28">
+          <div className="container-x">
+            <Reveal>
+              <SectionHeading eyebrow="In production" title="Built and run by this practice." intro="Our own products apply the same methods we use for client work." />
+            </Reveal>
+            <div className="mt-12 grid gap-4 md:grid-cols-2">
+              {related.map((p, i) => (
+                <Reveal key={p.slug} delay={i * 70}>
+                  <Link href={`/products/${p.slug}`} className="group flex h-full flex-col rounded-3xl bg-surface-raised p-8 ring-1 ring-line transition-shadow duration-500 hover:shadow-[0_32px_64px_-32px_rgba(11,18,32,0.3)]">
+                    <div className="flex items-center gap-3">
+                      <StatusPill status={p.status} />
+                      <span className="text-[13px] font-semibold text-ink-muted">{p.category}</span>
+                    </div>
+                    <h3 className="mt-6 text-[24px] font-semibold tracking-tight">{p.name}</h3>
+                    <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{p.summary}</p>
+                    <span className="mt-auto inline-flex items-center gap-2 pt-8 text-[14px] font-semibold text-brand">
+                      View product
+                      <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Other solutions */}
       <section className="bg-surface py-20 sm:py-24">
         <div className="container-x">
           <Reveal>
-            <Eyebrow>Related capabilities</Eyebrow>
+            <Eyebrow>Other practices</Eyebrow>
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {others.map((o, i) => (
               <Reveal key={o.slug} delay={i * 60}>
                 <Link href={`/solutions/${o.slug}`} className="group flex h-full flex-col rounded-3xl bg-white p-7 ring-1 ring-line transition-all hover:ring-brand/30">
