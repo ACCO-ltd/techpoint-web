@@ -1,3 +1,4 @@
+import type { Solution } from "@/content/site";
 import { ErpMockup } from "./Mockups";
 
 const mono = { fontFamily: "var(--font-inter)" };
@@ -146,8 +147,141 @@ export function AppStackDiagram({ className = "" }: { className?: string }) {
   );
 }
 
-export function SolutionDiagram({ type, className }: { type: "erp" | "app" | "integration" | "ai" | "lifecycle"; className?: string }) {
+/** Office sites connecting securely to a cloud environment that replicates to a recovery site. */
+export function CloudDiagram({ className = "" }: { className?: string }) {
+  const sites = ["Head office", "Branches", "Field teams"];
+  const sy = (i: number) => 90 + i * 100;
+  const services = ["Applications", "Databases", "File storage"];
+  return (
+    <svg viewBox="0 0 640 380" className={className} role="img" aria-label="Office sites connect securely to a managed cloud environment, which is backed up to a separate recovery site">
+      {sites.map((s, i) => {
+        const d = `M150 ${sy(i)} C 210 ${sy(i)}, 210 190, 262 190`;
+        return (
+          <g key={s}>
+            <path d={d} fill="none" stroke="#0B1220" strokeOpacity="0.15" strokeWidth="1.5" />
+            <path d={d} fill="none" stroke="#1F5EFF" strokeWidth="1.5" strokeDasharray="3 9" className="animate-flow" />
+            <rect x="20" y={sy(i) - 22} width="130" height="44" rx="10" fill="#fff" stroke="#0B1220" strokeOpacity="0.1" />
+            <circle cx="42" cy={sy(i)} r="5" fill="#1F5EFF" />
+            <text x="56" y={sy(i) + 4.5} fontSize="13" fontWeight="500" fill="#0B1220" style={sans}>{s}</text>
+          </g>
+        );
+      })}
+      <rect x="262" y="58" width="206" height="264" rx="18" fill="#0B1220" />
+      <text x="282" y="88" fontSize="11" fill="#98A2B3" letterSpacing="0.6" style={mono}>MANAGED CLOUD</text>
+      {services.map((s, i) => (
+        <g key={s}>
+          <rect x="282" y={104 + i * 56} width="166" height="42" rx="9" fill="#151D2E" stroke="#263047" />
+          <circle cx="302" cy={125 + i * 56} r="4.5" fill="#2FD49E" className="animate-pulse-soft" />
+          <text x="316" y={129.5 + i * 56} fontSize="13" fontWeight="500" fill="#F4F6FA" style={sans}>{s}</text>
+        </g>
+      ))}
+      <text x="282" y="300" fontSize="11" fill="#98A2B3" style={mono}>Monitored · patched · encrypted</text>
+      <path d="M468 190 H 508" stroke="#5B8CFF" strokeWidth="1.5" strokeDasharray="3 9" className="animate-flow" />
+      <rect x="508" y="132" width="112" height="116" rx="14" fill="#E8EEFF" stroke="#1F5EFF" strokeOpacity="0.2" />
+      <path d="M548 168 a16 16 0 1 1 -4 10.5" fill="none" stroke="#1F5EFF" strokeWidth="2" strokeLinecap="round" />
+      <path d="M540 172 l4 6.5 6 -4.5" fill="none" stroke="#1F5EFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <text x="564" y="212" textAnchor="middle" fontSize="13" fontWeight="600" fill="#0B1220" style={sans}>Recovery site</text>
+      <text x="564" y="230" textAnchor="middle" fontSize="11" fill="#5B6475" style={mono}>Tested restores</text>
+      <text x="206" y="350" textAnchor="middle" fontSize="12" fill="#5B6475" style={mono}>Encrypted connections</text>
+    </svg>
+  );
+}
+
+/** Defence in depth: identity, network and application controls around protected data. */
+export function SecurityDiagram({ className = "" }: { className?: string }) {
+  const rings = [
+    { r: 200, label: "Identity & access", fill: "#F4F6FA" },
+    { r: 150, label: "Network & endpoints", fill: "#E8EEFF" },
+    { r: 100, label: "Applications", fill: "#C9D7FF" },
+  ];
+  const c = 230;
+  return (
+    <div className={`grid items-center gap-8 lg:grid-cols-[1.2fr_1fr] ${className}`}>
+      <svg viewBox="0 0 460 460" className="mx-auto w-full max-w-[440px]" role="img" aria-label="Layers of protection: identity and access, network and endpoints, and applications surround the organization's data">
+        {rings.map((ring) => (
+          <g key={ring.label}>
+            <circle cx={c} cy={c} r={ring.r} fill={ring.fill} stroke="#0B1220" strokeOpacity="0.08" />
+            <text x={c} y={c - ring.r + 30} textAnchor="middle" fontSize="13" fontWeight="600" fill="#0B1220" style={sans}>{ring.label}</text>
+          </g>
+        ))}
+        <circle cx={c} cy={c} r="200" fill="none" stroke="#1F5EFF" strokeWidth="1.5" strokeDasharray="3 10" className="animate-flow" />
+        <circle cx={c} cy={c} r="52" fill="#0B1220" />
+        <path d={`M${c - 11} ${c - 2} v-7 a11 11 0 0 1 22 0 v7`} fill="none" stroke="#5B8CFF" strokeWidth="2.4" strokeLinecap="round" />
+        <rect x={c - 16} y={c - 3} width="32" height="22" rx="5" fill="#5B8CFF" />
+        <text x={c} y={c + 78} textAnchor="middle" fontSize="13" fontWeight="600" fill="#0B1220" style={sans}>Your data</text>
+      </svg>
+      <ol className="space-y-3">
+        {[
+          ["Identify", "Assets, risks and who needs access to what"],
+          ["Protect", "Access control, hardening and encryption"],
+          ["Detect", "Monitoring and alerts on unusual activity"],
+          ["Respond", "A rehearsed plan with named responsibilities"],
+          ["Recover", "Tested backups and documented restoration"],
+        ].map(([t, d], i) => (
+          <li key={t} className={`flex items-start gap-4 rounded-2xl p-4 ring-1 ${i === 1 ? "bg-ink text-on-dark ring-ink" : "bg-white ring-ink/8"}`}>
+            <span className={`text-[13px] font-semibold tabular-nums ${i === 1 ? "text-brand-light" : "text-brand"}`}>0{i + 1}</span>
+            <span>
+              <span className="block text-[16px] font-semibold tracking-tight">{t}</span>
+              <span className={`block text-[13px] ${i === 1 ? "text-on-dark/70" : "text-ink-muted"}`}>{d}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+/** Operational systems feeding a governed data model that serves dashboards and reports. */
+export function DataDiagram({ className = "" }: { className?: string }) {
+  const sources = ["Finance", "Sales", "Inventory", "People"];
+  const sy = (i: number) => 70 + i * 80;
+  const bars = [38, 56, 44, 72, 64, 88];
+  return (
+    <svg viewBox="0 0 640 380" className={className} role="img" aria-label="Finance, sales, inventory and people data flow into a governed data model that powers management dashboards and reports">
+      {sources.map((s, i) => {
+        const d = `M150 ${sy(i)} C 210 ${sy(i)}, 210 190, 250 190`;
+        return (
+          <g key={s}>
+            <path d={d} fill="none" stroke="#0B1220" strokeOpacity="0.15" strokeWidth="1.5" />
+            <path d={d} fill="none" stroke="#1F5EFF" strokeWidth="1.5" strokeDasharray="3 9" className="animate-flow" />
+            <rect x="20" y={sy(i) - 22} width="130" height="44" rx="10" fill="#fff" stroke="#0B1220" strokeOpacity="0.1" />
+            <circle cx="42" cy={sy(i)} r="5" fill="#1F5EFF" />
+            <text x="56" y={sy(i) + 4.5} fontSize="13" fontWeight="500" fill="#0B1220" style={sans}>{s}</text>
+          </g>
+        );
+      })}
+      <rect x="250" y="120" width="150" height="140" rx="16" fill="#0B1220" />
+      {[0, 1, 2].map((i) => (
+        <ellipse key={i} cx="325" cy={156 + i * 22} rx="34" ry="9" fill="#151D2E" stroke="#5B8CFF" strokeOpacity="0.7" />
+      ))}
+      <text x="325" y="232" textAnchor="middle" fontSize="13" fontWeight="600" fill="#F4F6FA" style={sans}>Governed model</text>
+      <text x="325" y="248" textAnchor="middle" fontSize="10.5" fill="#98A2B3" style={mono}>Definitions · quality</text>
+      <path d="M400 190 H 440" stroke="#1F5EFF" strokeWidth="1.5" strokeDasharray="3 9" className="animate-flow" />
+      <rect x="440" y="62" width="180" height="256" rx="16" fill="#fff" stroke="#0B1220" strokeOpacity="0.1" />
+      <text x="460" y="92" fontSize="11" fill="#5B6475" letterSpacing="0.6" style={mono}>MANAGEMENT VIEW</text>
+      <rect x="460" y="106" width="66" height="44" rx="8" fill="#E8EEFF" />
+      <rect x="534" y="106" width="66" height="44" rx="8" fill="#F4F6FA" />
+      <rect x="470" y="118" width="30" height="6" rx="3" fill="#1F5EFF" />
+      <rect x="470" y="131" width="44" height="8" rx="4" fill="#0B1220" />
+      <rect x="544" y="118" width="30" height="6" rx="3" fill="#98A2B3" />
+      <rect x="544" y="131" width="40" height="8" rx="4" fill="#0B1220" />
+      <line x1="460" y1="270" x2="600" y2="270" stroke="#0B1220" strokeOpacity="0.1" />
+      {bars.map((h, i) => (
+        <rect key={i} x={466 + i * 22} y={270 - h} width="14" height={h} rx="3" fill={i === bars.length - 1 ? "#1F5EFF" : "#C9D7FF"} />
+      ))}
+      <text x="460" y="298" fontSize="11" fill="#5B6475" style={mono}>Dashboards · reports</text>
+    </svg>
+  );
+}
+
+export function SolutionDiagram({ type, className }: { type: Solution["diagram"]; className?: string }) {
   switch (type) {
+    case "cloud":
+      return <CloudDiagram className={className} />;
+    case "security":
+      return <SecurityDiagram className={className} />;
+    case "data":
+      return <DataDiagram className={className} />;
     case "integration":
       return <IntegrationDiagram className={className} />;
     case "ai":

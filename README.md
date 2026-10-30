@@ -16,8 +16,8 @@ npm run build && npm start
 
 | Path | Purpose |
 | --- | --- |
-| `src/content/site.ts` | **All public copy**: company details, solutions, products, process, principles. Edit here, not in pages. |
-| `src/app/*` | Pages: home, solutions (+5 detail pages), products (+detail pages), how-we-work, company, contact, privacy |
+| `src/content/site.ts` | **All public copy**: positioning, vision, mission, tagline, the six practices, products, process, differentiators. Edit here, not in pages. |
+| `src/app/*` | Pages: home, solutions (+6 practice pages), products (+detail pages), how-we-work, company, our-work, contact, privacy. Old solution URLs redirect in `next.config.ts`. |
 | `src/app/contact/` | Multi-step project enquiry: client form, Zod schema, server action |
 | `src/lib/enquiry-delivery.ts` | Sends enquiries by email (Resend). Swap for a CRM later. |
 | `src/components/illustrations/` | Animated systems map, coded product interfaces, solution diagrams |
@@ -42,4 +42,9 @@ Everything marked `CONFIRM` in the code needs a decision before going live:
 - [ ] Privacy notice reviewed
 - [ ] Privacy-conscious analytics with an enquiry-submitted conversion event
 - [ ] Named owner for incoming enquiries and content updates
-- [ ] Case studies — add only with client approval and verified outcomes
+- [ ] Case studies — add only with client approval and verified outcomes (`/our-work`)
+- [ ] Core values from the corporate profile (`differentiators` note in `site.ts`)
+- [ ] Confirm the three delivery teams map to the six practices as shown (`deliveryGroups`)
+- [ ] Confirm the evidence offered on `/our-work` can be provided on request
+- [ ] Add Insights to the navigation once the first articles are ready
+- [ ] Refresh the share image (`src/app/opengraph-image.png`) with the new tagline

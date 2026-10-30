@@ -10,7 +10,7 @@ import { industries, solutions } from "@/content/site";
 export const metadata: Metadata = {
   title: "Solutions",
   description:
-    "Enterprise systems and ERP, custom software, integration and automation, applied AI, and implementation and support — delivered by Techpoint Solutions.",
+    "Six strategic practices: cloud and digital infrastructure, cybersecurity, AI and automation, data analytics, software development, and IT consulting and managed services.",
   alternates: { canonical: "/solutions" },
 };
 
@@ -21,11 +21,11 @@ export default function SolutionsPage() {
         eyebrow="Solutions"
         title={
           <>
-            Capabilities organized around <Accent>business needs.</Accent>
+            Six practices. <Accent>One accountable partner.</Accent>
           </>
         }
-        intro="We don't lead with programming languages. We start with the operational problem — then design, build and support the system that solves it."
-        image="/images/circuit.jpg"
+        intro="We organize everything we do around six strategic technology priorities. Each starts from a business problem, and ends with a working system your teams can rely on."
+        image="/images/network-earth.jpg"
         imageAlt=""
       />
 

@@ -9,7 +9,7 @@ import { products, type ProductStatus } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Products",
-  description: "Techpoint's software portfolio: enterprise systems, education technology and business applications — with clear status and availability.",
+  description: "Software built and operated by Techpoint Solutions — property management, ERP and business applications — with clear status and availability.",
   alternates: { canonical: "/products" },
 };
 
@@ -40,6 +40,33 @@ export default function ProductsPage() {
           ))}
         </ul>
       </PageHero>
+
+      <section className="bg-surface pt-20 sm:pt-28">
+        <div className="container-x grid gap-4 md:grid-cols-2">
+          <Reveal className="h-full rounded-4xl bg-ink p-8 text-on-dark sm:p-10">
+            <span className="grid size-11 place-items-center rounded-2xl bg-brand-light/10 text-brand-light ring-1 ring-brand-light/20">
+              <Icon name="box" className="size-5" />
+            </span>
+            <h2 className="mt-8 text-[24px] font-semibold tracking-tight">Techpoint products</h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-on-dark-muted">
+              Software we own, build and operate ourselves. You subscribe to a working product, configured for your organization, with
+              setup, data migration and training from our team.
+            </p>
+          </Reveal>
+          <Reveal delay={80} className="h-full rounded-4xl bg-surface-raised p-8 ring-1 ring-line sm:p-10">
+            <span className="grid size-11 place-items-center rounded-2xl bg-brand-tint text-brand">
+              <Icon name="briefcase" className="size-5" />
+            </span>
+            <h2 className="mt-8 text-[24px] font-semibold tracking-tight">Solutions & services</h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">
+              Consulting, implementation and managed services across our six practices, delivered for systems you own.{" "}
+              <Link href="/solutions" className="font-semibold text-brand hover:text-brand-strong">
+                Explore solutions
+              </Link>
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       <section className="bg-surface py-20 sm:py-28">
         <div className="container-x space-y-6">

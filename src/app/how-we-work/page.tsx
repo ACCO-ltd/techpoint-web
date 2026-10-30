@@ -4,7 +4,7 @@ import { Icon } from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 import { CheckList, CtaBand, PageHero } from "@/components/sections";
 import { Accent, SectionHeading } from "@/components/ui";
-import { deliveryProcess } from "@/content/site";
+import { deliveryProcess, principles } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "How we work",
@@ -92,6 +92,35 @@ export default function HowWeWorkPage() {
               ]}
             />
           </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-surface py-20 sm:py-28">
+        <div className="container-x">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Engineering commitments"
+              title={
+                <>
+                  Evidence over slogans. <Accent>Built into every release.</Accent>
+                </>
+              }
+              intro="Trust comes from how we work, not how loudly we claim it. These commitments apply to every system we deliver and every product we operate."
+            />
+          </Reveal>
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {principles.map((p, i) => (
+              <Reveal key={p.title} delay={(i % 3) * 70} className="h-full">
+                <div className="h-full rounded-3xl bg-white p-7 ring-1 ring-line transition-shadow duration-500 hover:shadow-[0_24px_48px_-24px_rgba(11,18,32,0.25)]">
+                  <span className="grid size-11 place-items-center rounded-2xl bg-ink text-brand-light">
+                    <Icon name={p.icon} className="size-5" />
+                  </span>
+                  <h3 className="mt-6 text-[20px] font-semibold tracking-tight">{p.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{p.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -1,31 +1,26 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ClientGrid } from "@/components/ClientLogos";
 import { Icon } from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 import { CtaBand, PageHero } from "@/components/sections";
 import { Accent, Eyebrow, SectionHeading } from "@/components/ui";
-import { company, principles } from "@/content/site";
+import { company, deliveryGroups, differentiators, solutions } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Company",
-  description:
-    "About Techpoint Solutions — an enterprise technology partner helping organizations in Somalia and East Africa modernize operations through reliable software.",
+  description: `About ${company.name} — ${company.positioning}. Our vision, mission and how we deliver for organizations in Somalia and East Africa.`,
   alternates: { canonical: "/company" },
 };
-
-const practices = [
-  { icon: "layers" as const, title: "Business systems", body: "ERP, finance, HR, procurement and inventory implementation grounded in how operations really work." },
-  { icon: "code" as const, title: "Product engineering", body: "Design and development of web platforms, portals and our own software products." },
-  { icon: "server" as const, title: "Infrastructure & support", body: "Hosting, deployment, monitoring, maintenance and user support after go-live." },
-];
 
 // CONFIRM: add founding year, registration details and leadership profiles once approved for publication.
 const facts = [
   ["Company", company.name],
+  ["Positioning", company.positioning],
   ["Headquarters", company.location],
   ["Service area", company.serviceArea],
-  ["Focus", "Enterprise software, business systems and applied AI"],
+  ["Practices", `${solutions.length} strategic technology practices`],
   ["Contact", company.email],
 ];
 
@@ -36,61 +31,92 @@ export default function CompanyPage() {
         eyebrow="About Techpoint"
         title={
           <>
-            We build the systems behind <Accent>better business.</Accent>
+            A trusted technology partner for <Accent>organizations that intend to grow.</Accent>
           </>
         }
-        intro="Techpoint Solutions is an enterprise technology company. We help organizations modernize operations through dependable software, connected business systems and practical AI — and we develop our own products along the way."
+        intro="Techpoint Solutions is an enterprise software and digital solutions company. We help organizations modernize operations, strengthen digital capabilities, manage risk and grow sustainably through technology."
         image="/images/office.jpg"
         imageAlt=""
       />
 
+      {/* Vision & mission */}
       <section className="bg-surface py-20 sm:py-28">
-        <div className="container-x grid gap-14 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
-            <Eyebrow>Our mission</Eyebrow>
-          </Reveal>
-          <Reveal delay={80} className="lg:col-span-7">
-            <p className="font-display text-[26px] leading-[1.3] font-medium tracking-[-0.02em] text-ink sm:text-[32px]">
-              To give organizations the systems they need to operate with clarity, control and confidence — engineered carefully, explained
-              honestly and supported for the long term.
-            </p>
+        <div className="container-x">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Reveal className="relative isolate h-full overflow-hidden rounded-4xl bg-ink p-8 text-on-dark sm:p-12">
+              <div className="grid-lines absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
+              <div className="absolute -top-24 -right-24 -z-10 size-72 rounded-full bg-[radial-gradient(circle,rgba(91,140,255,0.25),transparent_65%)]" aria-hidden="true" />
+              <Eyebrow tone="light">Our vision</Eyebrow>
+              <p className="mt-10 font-display text-[24px] leading-[1.35] font-medium tracking-[-0.02em] sm:text-[28px]">{company.vision}</p>
+            </Reveal>
+            <Reveal delay={80} className="h-full rounded-4xl bg-surface-raised p-8 ring-1 ring-line sm:p-12">
+              <Eyebrow>Our mission</Eyebrow>
+              <p className="mt-10 font-display text-[24px] leading-[1.35] font-medium tracking-[-0.02em] text-ink sm:text-[28px]">{company.mission}</p>
+            </Reveal>
+          </div>
+          <Reveal delay={120} className="mt-4 flex flex-col items-start justify-between gap-6 rounded-4xl border border-line px-8 py-8 sm:flex-row sm:items-center sm:px-12">
+            <p className="text-[13px] font-semibold text-ink-muted">Our promise</p>
+            <p className="font-display text-[26px] leading-tight font-semibold tracking-[-0.025em] text-ink sm:text-[32px]">{company.tagline}</p>
           </Reveal>
         </div>
       </section>
 
+      {/* Position */}
       <section className="bg-surface pb-20 sm:pb-28">
         <div className="container-x grid gap-4 lg:grid-cols-12">
           <Reveal className="relative min-h-80 overflow-hidden rounded-4xl lg:col-span-7">
-            <Image src="/images/students.jpg" alt="People collaborating around laptops in a library" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover" />
+            <Image src="/images/team-laptops.jpg" alt="Engineering team collaborating on laptops" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover" />
           </Reveal>
-          <Reveal delay={80} className="relative overflow-hidden rounded-4xl bg-ink p-8 text-on-dark sm:p-12 lg:col-span-5">
-            <Eyebrow tone="light">Our position</Eyebrow>
-            <p className="mt-8 text-[18px] leading-relaxed text-on-dark/80">
-              We are not a general web agency. Our work centres on the systems organizations depend on every day: finance, operations,
-              people, inventory, academics and the integrations between them.
+          <Reveal delay={80} className="relative overflow-hidden rounded-4xl bg-surface-raised p-8 ring-1 ring-line sm:p-12 lg:col-span-5">
+            <Eyebrow>Our position</Eyebrow>
+            <p className="mt-8 text-[18px] leading-relaxed text-ink-soft">
+              We are not a general web agency. Our work centres on the systems organizations depend on every day — their infrastructure,
+              security, data, business applications and the integrations between them.
             </p>
-            <p className="mt-5 text-[18px] leading-relaxed text-on-dark/80">
-              Our home market is Somalia and East Africa. We hold our work to standards that international clients expect — in security,
+            <p className="mt-5 text-[18px] leading-relaxed text-ink-soft">
+              Our home market is Somalia and East Africa. We hold our work to the standards international clients expect in security,
               documentation and delivery discipline.
             </p>
           </Reveal>
         </div>
       </section>
 
+      {/* Organization */}
       <section className="bg-surface-raised py-20 sm:py-28">
         <div className="container-x">
           <Reveal>
-            <SectionHeading eyebrow="How we're organized" title="Three practices. One accountable team." />
+            <SectionHeading
+              eyebrow="How we're organized"
+              title={
+                <>
+                  Six practices. <Accent>Three accountable teams.</Accent>
+                </>
+              }
+              intro="Clients see six strategic practices. Behind them, three delivery teams share methods, tooling and standards — so a project that spans infrastructure, software and data is still run by one team."
+            />
           </Reveal>
           <div className="mt-14 grid gap-4 md:grid-cols-3">
-            {practices.map((p, i) => (
-              <Reveal key={p.title} delay={i * 70}>
-                <div className="h-full rounded-3xl bg-white p-8 ring-1 ring-line">
-                  <span className="grid size-12 place-items-center rounded-2xl bg-brand-tint text-brand">
-                    <Icon name={p.icon} className="size-5.5" />
+            {deliveryGroups.map((g, i) => (
+              <Reveal key={g.title} delay={i * 70} className="h-full">
+                <div className="flex h-full flex-col rounded-3xl bg-white p-8 ring-1 ring-line">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-ink text-brand-light">
+                    <Icon name={g.icon} className="size-5.5" />
                   </span>
-                  <h3 className="mt-8 text-2xl font-semibold tracking-tight">{p.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">{p.body}</p>
+                  <h3 className="mt-8 text-2xl font-semibold tracking-tight">{g.title}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">{g.body}</p>
+                  <p className="mt-8 border-t border-line pt-6 text-[13px] font-semibold text-ink-muted">Leads</p>
+                  <ul className="mt-3 space-y-2">
+                    {solutions
+                      .filter((s) => g.practices.includes(s.slug))
+                      .map((s) => (
+                        <li key={s.slug}>
+                          <Link href={`/solutions/${s.slug}`} className="group flex items-start gap-2.5 text-[15px] font-medium text-ink hover:text-brand">
+                            <Icon name={s.icon} className="mt-0.5 size-4 shrink-0 text-brand" />
+                            {s.name}
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
                 </div>
               </Reveal>
             ))}
@@ -98,18 +124,30 @@ export default function CompanyPage() {
         </div>
       </section>
 
+      {/* How we deliver */}
       <section className="bg-surface py-20 sm:py-28">
         <div className="container-x grid gap-14 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
-            <SectionHeading eyebrow="Operating principles" title="How we hold ourselves accountable." />
+            <div className="lg:sticky lg:top-32">
+              <SectionHeading
+                eyebrow="How we deliver"
+                title={
+                  <>
+                    Our difference is how we deliver, <Accent>not simply what we sell.</Accent>
+                  </>
+                }
+              />
+            </div>
           </Reveal>
           <ul className="lg:col-span-7">
-            {principles.map((p, i) => (
-              <Reveal as="li" key={p.title} delay={i * 40} className="flex gap-6 border-t border-line py-7 first:border-t-0 first:pt-0">
-                <Icon name={p.icon} className="mt-1 size-5 shrink-0 text-brand" />
+            {differentiators.map((d, i) => (
+              <Reveal as="li" key={d.title} delay={i * 40} className="flex gap-6 border-t border-line py-8 first:border-t-0 first:pt-0">
+                <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-brand-tint text-brand">
+                  <Icon name={d.icon} className="size-5" />
+                </span>
                 <div>
-                  <h3 className="text-xl font-semibold tracking-tight">{p.title}</h3>
-                  <p className="mt-1.5 text-[15px] leading-relaxed text-ink-muted">{p.body}</p>
+                  <h3 className="text-xl font-semibold tracking-tight">{d.title}</h3>
+                  <p className="mt-1.5 text-[16px] leading-relaxed text-ink-muted">{d.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -117,7 +155,7 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      <section className="bg-surface py-20 sm:py-28">
+      <section className="bg-surface-raised py-20 sm:py-28">
         <div className="container-x">
           <Reveal>
             <SectionHeading eyebrow="Clients" title="Organizations we work with." intro="Construction, engineering, property, agriculture, logistics and retail organizations across Somalia." />
@@ -128,7 +166,7 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      <section className="bg-surface-raised py-20 sm:py-28">
+      <section className="bg-surface py-20 sm:py-28">
         <div className="container-x">
           <Reveal>
             <SectionHeading eyebrow="Company information" title="At a glance." />

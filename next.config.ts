@@ -15,6 +15,16 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  // Solutions were reorganized around the six strategic practices.
+  async redirects() {
+    return [
+      ["enterprise-systems", "software-development"],
+      ["custom-software", "software-development"],
+      ["integration-automation", "software-development"],
+      ["ai-solutions", "ai-automation"],
+      ["implementation-support", "it-consulting"],
+    ].map(([from, to]) => ({ source: `/solutions/${from}`, destination: `/solutions/${to}`, permanent: true }));
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

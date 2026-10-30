@@ -1,6 +1,9 @@
 /**
  * Single source of truth for Techpoint's public content.
  *
+ * Positioning, vision, mission, tagline and the six strategic practices follow
+ * the approved Techpoint corporate profile. Keep them word-for-word aligned.
+ *
  * Anything marked `CONFIRM` is a working assumption that must be verified
  * before launch (see the launch checklist in README.md). Do not add client
  * logos, testimonials, statistics or outcomes unless they are approved and
@@ -10,9 +13,15 @@
 export const company = {
   name: "Techpoint Solutions",
   shortName: "Techpoint",
-  tagline: "Innovation in motion",
+  positioning: "Enterprise Software & Digital Solutions",
+  tagline: "Technology that moves business forward.",
   description:
-    "Techpoint Solutions helps organizations design, implement and evolve enterprise software, connected business systems and practical AI.",
+    "Techpoint Solutions helps organizations modernize operations, strengthen digital capabilities, manage risk and grow sustainably through technology.",
+  // Corporate profile, pages 3–5.
+  vision:
+    "To become a trusted technology partner recognised for delivering innovative, reliable and sustainable digital solutions that empower businesses and communities to thrive in an increasingly connected world.",
+  mission:
+    "To simplify technology, solve complex business challenges and enable organisations to achieve their objectives through secure digital infrastructure, intelligent solutions and dependable technology services.",
   // CONFIRM: production domain
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://techpoint.so",
   email: "info@techpoint.so",
@@ -23,12 +32,14 @@ export const company = {
   responseTime: "two business days",
 } as const;
 
+// "Insights" joins the navigation once there are articles to publish.
 export const nav = [
   { label: "Home", href: "/" },
   { label: "Solutions", href: "/solutions" },
   { label: "Products", href: "/products" },
   { label: "How we work", href: "/how-we-work" },
   { label: "Company", href: "/company" },
+  { label: "Our work", href: "/our-work" },
 ] as const;
 
 export type IconName =
@@ -54,7 +65,18 @@ export type IconName =
   | "building"
   | "truck"
   | "factory"
-  | "briefcase";
+  | "briefcase"
+  | "cloud"
+  | "database"
+  | "target"
+  | "handshake"
+  | "puzzle"
+  | "fingerprint"
+  | "network"
+  | "gauge"
+  | "alert"
+  | "headset"
+  | "brain";
 
 export type Solution = {
   slug: string;
@@ -65,145 +87,125 @@ export type Solution = {
   intro: string;
   image: string;
   imageAlt: string;
+  /** Business problems this practice addresses. */
   signals: string[];
   capabilities: { title: string; body: string; icon: IconName }[];
   deliverables: string[];
+  /** Qualitative outcomes. Never publish figures here without verified evidence. */
+  outcomes: string[];
   idealFor: string[];
-  diagram: "erp" | "app" | "integration" | "ai" | "lifecycle";
+  /** Product slugs that demonstrate this practice in production. */
+  relatedProducts?: string[];
+  diagram: "erp" | "app" | "integration" | "ai" | "lifecycle" | "cloud" | "security" | "data";
 };
 
+// The six strategic technology priorities from the corporate profile.
 export const solutions: Solution[] = [
   {
-    slug: "enterprise-systems",
-    icon: "layers",
-    name: "Enterprise systems & ERP",
-    short:
-      "Finance, HR, procurement, inventory and operations brought into one dependable system of record.",
-    headline: "One system of record for how your organization actually runs.",
+    slug: "cloud-infrastructure",
+    icon: "cloud",
+    name: "Cloud Computing & Digital Infrastructure",
+    short: "Cloud migration, infrastructure modernization, backup, disaster recovery and managed cloud services.",
+    headline: "Infrastructure that stays available, recoverable and ready to grow.",
     intro:
-      "We implement and tailor enterprise business systems that replace spreadsheets and disconnected tools with controlled, auditable workflows — from the general ledger to the warehouse floor.",
-    image: "/images/warehouse.jpg",
-    imageAlt: "Distribution warehouse with organized inventory shelving",
+      "We plan and carry out cloud migrations, modernize ageing infrastructure and put tested backup and recovery in place — then operate the environment so your systems stay healthy.",
+    image: "/images/server-room.jpg",
+    imageAlt: "Server racks with organized cabling in a data center",
     signals: [
-      "Month-end close depends on spreadsheets passed between people",
-      "Stock levels, purchases and sales live in different tools",
-      "Approvals happen over chat and email with no audit trail",
-      "Management reporting takes days to assemble by hand",
+      "Core systems run on a single server with no tested recovery plan",
+      "Hosting costs and performance are hard to predict",
+      "Backups exist, but nobody has tried restoring one",
+      "Infrastructure changes depend on one person's knowledge",
     ],
     capabilities: [
-      { icon: "chart", title: "Finance & accounting", body: "Chart of accounts, receivables, payables, budgeting and financial reporting with clear controls." },
-      { icon: "users", title: "HR & payroll", body: "Employee records, attendance, leave, payroll runs and role-based self-service." },
-      { icon: "cart", title: "Procurement", body: "Requisitions, approvals, purchase orders and supplier management with full traceability." },
-      { icon: "box", title: "Inventory & warehouse", body: "Multi-location stock, movements, valuation and reorder visibility." },
-      { icon: "doc", title: "Sales & invoicing", body: "Quotations, orders, invoicing and customer statements connected to finance." },
-      { icon: "shield", title: "Controls & audit", body: "Role-based permissions, approval chains and activity history across modules." },
+      { icon: "cloud", title: "Cloud migration", body: "Assess, plan and move workloads to the cloud in controlled stages, with rollback at every step." },
+      { icon: "server", title: "Infrastructure modernization", body: "Replace fragile servers and networks with standardized, documented environments." },
+      { icon: "shield", title: "Backup", body: "Automated backup schedules with regular restore tests, not just copies on a disk." },
+      { icon: "clock", title: "Disaster recovery", body: "Recovery objectives agreed with management and procedures rehearsed before they are needed." },
+      { icon: "wrench", title: "Managed cloud services", body: "Patching, capacity, access and cost management handled under a clear service agreement." },
+      { icon: "gauge", title: "Monitoring", body: "Uptime, performance and error monitoring with defined escalation paths." },
     ],
     deliverables: [
-      "Process mapping and gap analysis",
-      "Configured and extended modules",
-      "Data migration from legacy tools",
-      "Role-based access design",
-      "User training and documentation",
-      "Post-launch stabilization support",
+      "Infrastructure assessment and migration plan",
+      "Target architecture and environment setup",
+      "Backup schedule with tested restores",
+      "Documented disaster recovery procedure",
+      "Monitoring and alerting configuration",
+      "Managed service agreement, where required",
     ],
-    idealFor: ["Trading & distribution", "Construction", "Manufacturing", "Growing multi-branch businesses"],
-    diagram: "erp",
+    outcomes: [
+      "Systems that can be restored within an agreed recovery window",
+      "Predictable hosting and operating costs",
+      "Infrastructure documented, not held in one person's head",
+      "Capacity that grows with the organization",
+    ],
+    idealFor: ["Organizations running business-critical systems", "Teams moving off on-premise servers", "Multi-branch operations"],
+    diagram: "cloud",
   },
   {
-    slug: "custom-software",
-    icon: "code",
-    name: "Custom software & web applications",
-    short:
-      "Purpose-built platforms, portals and internal tools designed around your users and processes.",
-    headline: "Software shaped around your process — not the other way round.",
+    slug: "cybersecurity",
+    icon: "shield",
+    name: "Cybersecurity & Digital Trust",
+    short: "Risk assessment, network security, identity management, data protection and incident response.",
+    headline: "Security designed in, in proportion to what you need to protect.",
     intro:
-      "When off-the-shelf products force your teams into workarounds, we design and build secure, maintainable web applications around the way your organization needs to operate.",
-    image: "/images/code-laptop.jpg",
-    imageAlt: "Laptop displaying application source code on a clean desk",
+      "We help organizations understand their risks, protect their networks, identities and data, and prepare to respond when something goes wrong — so clients, partners and regulators can trust how information is handled.",
+    image: "/images/circuit.jpg",
+    imageAlt: "Close-up of a printed circuit board",
     signals: [
-      "Your core process is a competitive advantage no product supports",
-      "Teams rely on workarounds to fit packaged software",
-      "Customers or partners need a secure self-service portal",
-      "An ageing internal system has become hard to maintain",
+      "Staff share accounts or keep access after they leave",
+      "Nobody can say where sensitive data is stored or who can see it",
+      "There is no plan for what to do if systems are compromised",
+      "Clients or regulators are asking about your security controls",
     ],
     capabilities: [
-      { icon: "briefcase", title: "Business platforms", body: "Operational systems for case management, scheduling, field work and service delivery." },
-      { icon: "users", title: "Portals", body: "Secure customer, supplier, student or partner portals with role-based access." },
-      { icon: "wrench", title: "Internal tools", body: "Focused admin panels and workflow tools that remove repetitive manual effort." },
-      { icon: "code", title: "Modernization", body: "Incremental rebuilds of legacy applications without disrupting daily operations." },
-      { icon: "lock", title: "Security by design", body: "Authentication, authorization, input validation and auditability from the first sprint." },
-      { icon: "chart", title: "Responsive by default", body: "Interfaces that work on desktop, tablet and phone for staff in the office and the field." },
+      { icon: "target", title: "Risk assessment", body: "Identify critical assets, threats and gaps, then prioritize what to fix first." },
+      { icon: "network", title: "Network security", body: "Firewalls, segmentation, secure remote access and hardened endpoints." },
+      { icon: "fingerprint", title: "Identity management", body: "Role-based access, multi-factor authentication and joiner–mover–leaver processes." },
+      { icon: "lock", title: "Data protection", body: "Classification, encryption, retention and backups for sensitive information." },
+      { icon: "alert", title: "Incident response", body: "A documented plan, clear responsibilities and support when an incident occurs." },
+      { icon: "users", title: "Security awareness", body: "Practical training that helps staff recognise and report phishing and fraud." },
     ],
     deliverables: [
-      "Product discovery and requirements",
-      "UX flows and interface design",
-      "Architecture and data model",
-      "Iterative builds with regular demos",
-      "Automated testing",
-      "Deployment, documentation and handover",
+      "Risk assessment with prioritized findings",
+      "Access control and identity policy",
+      "Network and endpoint hardening",
+      "Data classification and protection measures",
+      "Incident response plan and contacts",
+      "Staff awareness sessions",
     ],
-    idealFor: ["Universities & institutions", "Service organizations", "Operations-heavy businesses"],
-    diagram: "app",
+    outcomes: [
+      "A clear, prioritized view of your security risks",
+      "Access that matches roles and ends when people leave",
+      "Sensitive data identified, protected and recoverable",
+      "A rehearsed plan for responding to incidents",
+    ],
+    idealFor: ["Organizations handling financial or personal data", "Institutions with many users", "Businesses facing client or regulatory review"],
+    diagram: "security",
   },
   {
-    slug: "integration-automation",
-    icon: "link",
-    name: "Integration & automation",
-    short:
-      "Connect the systems you already rely on and automate the workflows between them.",
-    headline: "Make your systems work together — reliably and visibly.",
-    intro:
-      "We connect applications, data and people through controlled integrations and automated workflows, so information moves once, correctly, with a clear record of what happened.",
-    image: "/images/datacenter-blue.jpg",
-    imageAlt: "Network patch panel with connected ethernet cables",
-    signals: [
-      "Staff re-type the same data into several systems",
-      "Reports disagree because data is copied, not shared",
-      "Approvals stall waiting for someone to forward an email",
-      "Payments, banking or messaging services aren't connected",
-    ],
-    capabilities: [
-      { icon: "link", title: "API integration", body: "Connect ERPs, payment providers, messaging, banking and third-party services." },
-      { icon: "flow", title: "Workflow automation", body: "Approvals, notifications, escalations and document generation with clear rules." },
-      { icon: "server", title: "Data synchronization", body: "Scheduled and event-driven sync with validation, retries and error reporting." },
-      { icon: "doc", title: "Document automation", body: "Generate invoices, contracts, certificates and reports from system data." },
-      { icon: "box", title: "Data migration", body: "Clean, map and move data from legacy systems with reconciliation checks." },
-      { icon: "chart", title: "Operational visibility", body: "Logs and dashboards that show what ran, what failed and why." },
-    ],
-    deliverables: [
-      "Integration inventory and data flow mapping",
-      "API design or connector implementation",
-      "Error handling and monitoring",
-      "Automated workflow configuration",
-      "Runbooks for operations teams",
-    ],
-    idealFor: ["Organizations with multiple core systems", "Finance and operations teams", "Multi-branch businesses"],
-    diagram: "integration",
-  },
-  {
-    slug: "ai-solutions",
+    slug: "ai-automation",
     icon: "spark",
-    name: "Applied AI",
-    short:
-      "Practical AI where it delivers measurable value — with human oversight built in.",
-    headline: "AI applied to real work, with people firmly in control.",
+    name: "Artificial Intelligence & Intelligent Automation",
+    short: "AI-powered business solutions, workflow automation, implementation consulting and decision support.",
+    headline: "AI and automation applied to real work, with people in control.",
     intro:
-      "We help organizations identify where AI is genuinely useful, then build it into existing workflows with appropriate review steps, data controls and clear measures of value.",
+      "We help organizations find where AI and automation are genuinely useful, then build them into existing workflows with review steps, data controls and clear measures of value.",
     image: "/images/fiber.jpg",
     imageAlt: "Abstract network of connected lines and nodes",
     signals: [
       "Teams spend hours reading, extracting or classifying documents",
+      "Approvals and notifications depend on someone remembering to forward an email",
       "Staff struggle to find answers in internal policies and records",
-      "You want to explore AI but need a responsible starting point",
-      "Requests arrive unstructured and need routing to the right team",
+      "You want to use AI but need a responsible starting point",
     ],
     capabilities: [
-      { icon: "doc", title: "Document intelligence", body: "Extract structured data from invoices, forms and records with review queues." },
-      { icon: "book", title: "Knowledge assistants", body: "Answer staff questions from your approved documents, with sources cited." },
-      { icon: "flow", title: "Classification & routing", body: "Categorize incoming requests and route them to the right people." },
+      { icon: "doc", title: "AI-powered business solutions", body: "Document intelligence, classification and assistants built around your own data." },
+      { icon: "flow", title: "Workflow automation", body: "Approvals, notifications, escalations and document generation with clear rules." },
+      { icon: "compass", title: "Implementation consulting", body: "Assess use cases, data readiness and risk before committing to build." },
       { icon: "chart", title: "Decision support", body: "Summaries and insights that assist — not replace — accountable decision-makers." },
+      { icon: "book", title: "Knowledge assistants", body: "Answer staff questions from approved documents, with sources cited." },
       { icon: "shield", title: "Responsible use", body: "Data handling, access controls, evaluation and human approval steps." },
-      { icon: "compass", title: "AI readiness", body: "Assess use cases, data quality and risk before committing to build." },
     ],
     deliverables: [
       "Use-case assessment and prioritization",
@@ -212,42 +214,136 @@ export const solutions: Solution[] = [
       "Evaluation and monitoring approach",
       "Usage guidelines for staff",
     ],
-    idealFor: ["Document-heavy operations", "Universities", "Customer service teams"],
+    outcomes: [
+      "Less time spent on repetitive reading, typing and routing",
+      "Faster, more consistent handling of routine requests",
+      "AI use that is reviewed, logged and governed",
+      "A roadmap built on proven value, not hype",
+    ],
+    idealFor: ["Document-heavy operations", "Universities and institutions", "Customer service teams"],
     diagram: "ai",
   },
   {
-    slug: "implementation-support",
-    icon: "server",
-    name: "Implementation, cloud & support",
-    short:
-      "Deployment, infrastructure, training and long-term support that keep systems healthy after launch.",
-    headline: "Launch is the beginning. We stay for what comes after.",
+    slug: "data-analytics",
+    icon: "chart",
+    name: "Data Analytics & Business Intelligence",
+    short: "Data integration, management dashboards, predictive analytics, reporting and governance.",
+    headline: "Numbers leaders can trust, available when decisions are made.",
     intro:
-      "We deploy, operate and improve business systems over time — configuring infrastructure, training teams, monitoring health and delivering enhancements as your organization changes.",
-    image: "/images/server-room.jpg",
-    imageAlt: "Server racks with organized cabling in a data center",
+      "We bring data from your operational systems together, define it consistently and deliver dashboards and reports management can rely on — with the governance to keep them accurate.",
+    image: "/images/dashboard.jpg",
+    imageAlt: "Analytics dashboard with charts on a laptop screen",
     signals: [
-      "A system was delivered but nobody owns it now",
-      "Hosting, backups and updates are handled ad hoc",
-      "Staff were never properly trained on the tools they use",
-      "Small improvements wait months for attention",
+      "Management reports are assembled by hand at month end",
+      "Departments report different numbers for the same thing",
+      "Data sits in systems nobody can easily query",
+      "You want forecasts, but trust in today's figures comes first",
     ],
     capabilities: [
-      { icon: "server", title: "Cloud & hosting", body: "Provisioning, configuration and hardening of cloud or on-premise environments." },
-      { icon: "shield", title: "Backups & recovery", body: "Backup schedules, restore testing and documented recovery procedures." },
-      { icon: "chart", title: "Monitoring", body: "Uptime, error and performance monitoring with clear escalation paths." },
-      { icon: "users", title: "Training & adoption", body: "Role-based training, guides and help for teams through the transition." },
-      { icon: "wrench", title: "Maintenance", body: "Security updates, dependency upgrades and bug fixes on a predictable cadence." },
-      { icon: "flow", title: "Continuous improvement", body: "A managed backlog of enhancements prioritized with your stakeholders." },
+      { icon: "database", title: "Data integration", body: "Combine finance, sales, inventory and operational data into one consistent model." },
+      { icon: "chart", title: "Management dashboards", body: "Role-based dashboards showing the indicators each leader is accountable for." },
+      { icon: "gauge", title: "Predictive analytics", body: "Forecasts and trend analysis once the underlying data is reliable." },
+      { icon: "doc", title: "Reporting", body: "Scheduled and self-service reports that replace manual spreadsheet work." },
+      { icon: "shield", title: "Data governance", body: "Ownership, definitions, access rules and quality checks agreed and documented." },
+      { icon: "check", title: "Data quality", body: "Validation and reconciliation so figures agree across systems." },
     ],
     deliverables: [
-      "Deployment and environment setup",
-      "Backup and monitoring configuration",
-      "Training sessions and user guides",
-      "Support channel and response process",
+      "Data source inventory and KPI definitions",
+      "Integrated data model",
+      "Management dashboards",
+      "Scheduled and self-service reports",
+      "Data governance and ownership guidelines",
+    ],
+    outcomes: [
+      "One agreed definition for each key figure",
+      "Reports produced automatically instead of by hand",
+      "Leaders see current performance, not last month's",
+      "A sound foundation for forecasting",
+    ],
+    idealFor: ["Executive and finance teams", "Multi-branch businesses", "Organizations with several core systems"],
+    diagram: "data",
+  },
+  {
+    slug: "software-development",
+    icon: "code",
+    name: "Software Development & Digital Transformation",
+    short: "ERP and business applications, web and mobile software, API integration and systems modernization.",
+    headline: "Business software shaped around how your organization actually runs.",
+    intro:
+      "We implement ERP and build business applications, portals and mobile software — then connect them to the systems you already rely on, so information is entered once and trusted everywhere.",
+    image: "/images/code-laptop.jpg",
+    imageAlt: "Laptop displaying application source code on a clean desk",
+    signals: [
+      "Finance, stock and sales live in separate tools and spreadsheets",
+      "Teams rely on workarounds to fit packaged software",
+      "Staff re-enter the same data into several systems",
+      "An ageing internal system has become hard to maintain",
+    ],
+    capabilities: [
+      { icon: "layers", title: "ERP & business applications", body: "Finance, HR, procurement, inventory and sales in one controlled system of record." },
+      { icon: "code", title: "Web & mobile software", body: "Platforms, portals and internal tools that work in the office and in the field." },
+      { icon: "link", title: "API integration", body: "Connect ERPs, payment providers, banking, messaging and third-party services." },
+      { icon: "wrench", title: "Systems modernization", body: "Incremental rebuilds of legacy applications without disrupting daily operations." },
+      { icon: "box", title: "Data migration", body: "Clean, map and move data from legacy tools with reconciliation checks." },
+      { icon: "lock", title: "Security by design", body: "Authentication, authorization, validation and audit trails from the first sprint." },
+    ],
+    deliverables: [
+      "Process mapping and requirements",
+      "UX flows and interface design",
+      "Architecture, data model and integration plan",
+      "Iterative builds with milestone demos",
+      "Data migration with reconciliation",
+      "Automated testing, documentation and handover",
+    ],
+    outcomes: [
+      "One system of record instead of scattered spreadsheets",
+      "Information entered once and shared across systems",
+      "Controlled, auditable workflows and approvals",
+      "Software that absorbs new modules, users and integrations",
+    ],
+    idealFor: ["Trading & distribution", "Construction", "Property management", "Universities & institutions"],
+    relatedProducts: ["sukaan", "rukna"],
+    diagram: "integration",
+  },
+  {
+    slug: "it-consulting",
+    icon: "compass",
+    name: "IT Consulting & Managed Technology Services",
+    short: "Technology strategy, procurement, implementation, technical support and capability development.",
+    headline: "A technology partner for the big decisions and the day-to-day.",
+    intro:
+      "We help leadership teams plan technology investments, select and procure the right tools and implement them properly — then provide the support and training that keep everything working.",
+    image: "/images/planning.jpg",
+    imageAlt: "Team planning a project around a table",
+    signals: [
+      "Technology decisions are made without a plan or budget view",
+      "Vendors are chosen on price alone and later regretted",
+      "IT support is reactive and depends on whoever is available",
+      "Staff were never properly trained on the systems they use",
+    ],
+    capabilities: [
+      { icon: "compass", title: "Technology strategy", body: "A roadmap that ties technology investment to business priorities and budget." },
+      { icon: "cart", title: "Procurement", body: "Requirements, vendor evaluation and contract input for hardware, software and services." },
+      { icon: "flow", title: "Implementation", body: "Planning, coordination and oversight so new systems go live properly." },
+      { icon: "headset", title: "Technical support", body: "A defined support channel with response processes and escalation." },
+      { icon: "wrench", title: "Maintenance", body: "Updates, security patches and fixes on a predictable cadence." },
+      { icon: "graduation", title: "Capability development", body: "Role-based training that builds lasting skills inside your teams." },
+    ],
+    deliverables: [
+      "Technology assessment and roadmap",
+      "Vendor evaluation and procurement support",
+      "Implementation plan and oversight",
+      "Support channel with response process",
+      "Training programme and user guides",
       "Periodic health reviews",
     ],
-    idealFor: ["Organizations running business-critical systems", "Teams without in-house IT operations"],
+    outcomes: [
+      "Technology spending tied to business priorities",
+      "Fewer costly vendor and platform mistakes",
+      "Predictable, accountable support",
+      "Teams confident with the systems they rely on",
+    ],
+    idealFor: ["Organizations without in-house IT leadership", "Growing businesses", "Institutions planning major investments"],
     diagram: "lifecycle",
   },
 ];
@@ -434,13 +530,37 @@ export const principles = [
   { title: "Built to evolve", body: "Maintainable architecture that can absorb new modules, integrations and users.", icon: "layers" as IconName },
 ];
 
+/**
+ * Corporate profile, page 13: our difference is how we deliver, not simply what we sell.
+ * CONFIRM: add the profile's core values alongside these once their wording is approved for the web.
+ */
+export const differentiators = [
+  { title: "Business outcomes first", body: "Every engagement starts from the result your organization needs, and success is agreed in writing before work begins.", icon: "target" as IconName },
+  { title: "Integration, not islands", body: "We design systems to share information with what you already run, so data is entered once and trusted everywhere.", icon: "puzzle" as IconName },
+  { title: "Security by design", body: "Access control, data protection, audit trails and backups are part of the baseline — never an optional extra.", icon: "lock" as IconName },
+  { title: "Practical innovation", body: "We adopt cloud, data and AI where they deliver measurable value, and say so plainly when they don't.", icon: "spark" as IconName },
+  { title: "Lasting partnerships", body: "We stay after launch with support, training and improvement, because business systems are never really finished.", icon: "handshake" as IconName },
+];
+
+/**
+ * Internal delivery teams behind the six customer-facing practices.
+ * CONFIRM: this mapping reflects how Techpoint actually staffs its work.
+ */
+export const deliveryGroups = [
+  { title: "Business systems", body: "Requirements, process design, data and analytics, and technology advisory.", icon: "layers" as IconName, practices: ["data-analytics", "it-consulting"] },
+  { title: "Product engineering", body: "Business applications, integrations, AI and our own software products.", icon: "code" as IconName, practices: ["software-development", "ai-automation"] },
+  { title: "Infrastructure & security", body: "Cloud, networks, security operations, monitoring and support after go-live.", icon: "server" as IconName, practices: ["cloud-infrastructure", "cybersecurity"] },
+];
+
 export const enquiryTypes = [
-  { value: "enterprise-systems", label: "ERP or business system", hint: "Finance, HR, inventory, procurement", icon: "layers" as IconName },
-  { value: "custom-software", label: "Custom application", hint: "Platform, portal or internal tool", icon: "code" as IconName },
-  { value: "integration-automation", label: "Integration or automation", hint: "Connect systems, automate workflows", icon: "link" as IconName },
-  { value: "ai-solutions", label: "AI solution", hint: "Documents, knowledge, routing", icon: "spark" as IconName },
-  { value: "implementation-support", label: "Support or modernization", hint: "Hosting, maintenance, upgrades", icon: "server" as IconName },
+  { value: "software-development", label: "Software or ERP", hint: "Business apps, integration, modernization", icon: "code" as IconName },
+  { value: "cloud-infrastructure", label: "Cloud & infrastructure", hint: "Migration, backup, recovery", icon: "cloud" as IconName },
+  { value: "cybersecurity", label: "Cybersecurity", hint: "Risk, access, data protection", icon: "shield" as IconName },
+  { value: "ai-automation", label: "AI & automation", hint: "Documents, workflows, decision support", icon: "spark" as IconName },
+  { value: "data-analytics", label: "Data & BI", hint: "Dashboards, reporting, governance", icon: "chart" as IconName },
+  { value: "it-consulting", label: "Consulting & managed IT", hint: "Strategy, procurement, support", icon: "compass" as IconName },
   { value: "product", label: "A Techpoint product", hint: "Demo, pilot or pricing", icon: "box" as IconName },
+  { value: "not-sure", label: "Not sure yet", hint: "Describe the problem; we'll help scope it", icon: "puzzle" as IconName },
 ] as const;
 
 export const timelines = ["As soon as possible", "Within 3 months", "3–6 months", "6+ months", "Still exploring"] as const;

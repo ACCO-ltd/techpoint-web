@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { company } from "@/content/site";
+import { company, solutions } from "@/content/site";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -11,7 +11,7 @@ const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["lati
 export const metadata: Metadata = {
   metadataBase: new URL(company.url),
   title: {
-    default: `${company.name} — Enterprise software, business systems and applied AI`,
+    default: `${company.name} — ${company.positioning}`,
     template: `%s · ${company.name}`,
   },
   description: company.description,
@@ -37,7 +37,9 @@ const organizationJsonLd = {
   url: company.url,
   email: company.email,
   description: company.description,
+  slogan: company.tagline,
   areaServed: "East Africa",
+  knowsAbout: solutions.map((s) => s.name),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
