@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { company, solutions } from "@/content/site";
 import "./globals.css";
 
@@ -27,8 +29,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B1220",
+  themeColor: "#ffffff",
 };
+
+// Privacy-friendly, cookieless analytics (https://plausible.io). Loaded only when a domain is configured.
+const analyticsDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -57,6 +62,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <WhatsAppButton />
+        {analyticsDomain && <Script defer data-domain={analyticsDomain} src="https://plausible.io/js/script.js" strategy="afterInteractive" />}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
