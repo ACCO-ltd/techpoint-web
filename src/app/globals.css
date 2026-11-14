@@ -156,9 +156,24 @@
   }
 }
 
-/* Scroll-linked entrances. Progressive: browsers without view timelines show the final state. */
+/* Scroll-linked motion. Progressive: browsers without view timelines, and visitors who ask for
+   reduced motion, get the final state (and the one-shot .reveal fade where it applies). */
+.scroll-progress {
+  transform: scaleX(0);
+  transform-origin: left;
+}
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+    /* Reveals follow the scroll position in both directions instead of firing once.
+       .reveal-load keeps the one-shot fade for content already on screen at page load. */
+    .reveal:not(.reveal-load) {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      animation: reveal-scroll linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 25%;
+    }
     .scroll-rise {
       animation: scroll-rise linear both;
       animation-timeline: view();
@@ -170,6 +185,54 @@
       animation-range: entry 0% cover 45%;
       transform-origin: 50% 100%;
     }
+    /* A framed screenshot that starts tipped back and settles flat. */
+    .scroll-tilt {
+      animation: scroll-tilt linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 42%;
+      transform-origin: 50% 100%;
+    }
+    /* Same, for a screenshot already visible at the top of a page. */
+    .scroll-tilt-top {
+      animation: scroll-tilt linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px 460px;
+      transform-origin: 50% 100%;
+    }
+    /* Page hero copy eases away as the page starts to scroll. */
+    .scroll-hero {
+      animation: hero-exit linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 60px 560px;
+    }
+    /* A vertical rule that draws itself as its section is read. */
+    .scroll-line {
+      transform-origin: top;
+      animation: line-grow linear both;
+      animation-timeline: view();
+      animation-range: cover 14% cover 76%;
+    }
+    /* Reading progress under the header. */
+    .scroll-progress {
+      animation: line-grow-x linear both;
+      animation-timeline: scroll(root block);
+    }
+    /* Framed photographs drift from a slight zoom to rest while they cross the screen. */
+    main img[data-nimg="fill"] {
+      animation: img-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+@keyframes reveal-scroll {
+  from {
+    opacity: 0;
+    transform: translateY(calc(40px + var(--reveal-shift, 0px))) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 @keyframes scroll-rise {
@@ -188,6 +251,44 @@
   }
   to {
     transform: none;
+  }
+}
+@keyframes scroll-tilt {
+  from {
+    transform: perspective(1400px) rotateX(16deg) scale(0.93);
+  }
+  to {
+    transform: perspective(1400px) rotateX(0deg) scale(1);
+  }
+}
+@keyframes hero-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-36px) scale(0.97);
+  }
+}
+@keyframes line-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes line-grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes img-zoom {
+  from {
+    transform: scale(1.14);
+  }
+  to {
+    transform: scale(1);
   }
 }
 

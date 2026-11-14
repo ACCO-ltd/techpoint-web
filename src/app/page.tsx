@@ -77,19 +77,19 @@ function SectionIntro({ eyebrow, title, body }: { eyebrow: string; title: React.
 function Hero() {
   return (
     <section className="overflow-hidden bg-gradient-to-b from-white from-55% to-[#f5f5f7] pt-28 sm:pt-36">
-      <div className="container-x flex flex-col items-center gap-4 text-center">
-        <Reveal>
+      <div className="scroll-hero container-x flex flex-col items-center gap-4 text-center">
+        <Reveal load>
           <p className="text-[15px] font-semibold tracking-[-0.01em] text-brand sm:text-[17px]">Techpoint · Somalia and East Africa</p>
         </Reveal>
-        <Reveal delay={80}>
+        <Reveal load delay={80}>
           <h1 className="text-balance text-[44px] leading-[1.04] font-semibold tracking-[-0.04em] sm:text-[68px] lg:text-[88px]">
             Technology that moves business forward.
           </h1>
         </Reveal>
-        <Reveal delay={160}>
+        <Reveal load delay={160}>
           <p className={`${sub} max-w-[26em]`}>Software, secure infrastructure and practical AI for organizations that intend to grow.</p>
         </Reveal>
-        <Reveal delay={240} className="mt-2 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
+        <Reveal load delay={240} className="mt-2 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
           <PillLink href="/contact">Talk to our team</PillLink>
           <TextLink href="/solutions" className="text-[19px]">
             See what we do

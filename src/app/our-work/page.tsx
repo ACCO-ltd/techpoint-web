@@ -87,7 +87,9 @@ export default function OurWorkPage() {
                 </span>
               </div>
               <div className="lg:col-span-7">
-                <ProductMockup product={featured} className="transition-transform duration-700 group-hover:-translate-y-1.5" />
+                <div className="scroll-tilt">
+                  <ProductMockup product={featured} className="transition-transform duration-700 group-hover:-translate-y-1.5" />
+                </div>
               </div>
             </Link>
           </Reveal>

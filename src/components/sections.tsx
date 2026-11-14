@@ -22,26 +22,26 @@ export function PageHero({
 }) {
   return (
     <section className="bg-gradient-to-b from-white to-surface-raised pt-28 pb-16 text-center sm:pt-36 sm:pb-24">
-      <div className="container-x flex flex-col items-center">
+      <div className="scroll-hero container-x flex flex-col items-center">
         {breadcrumb && (
           <Link href={breadcrumb.href} className="mb-6 inline-flex items-center gap-2 text-[14px] text-ink-muted transition-colors hover:text-ink">
             <Icon name="arrow" className="size-3.5 rotate-180" />
             {breadcrumb.label}
           </Link>
         )}
-        <Reveal>
+        <Reveal load>
           <Eyebrow className="justify-center sm:text-[17px]">{eyebrow}</Eyebrow>
         </Reveal>
-        <Reveal delay={80}>
+        <Reveal load delay={80}>
           <h1 className="mt-4 max-w-4xl text-balance text-[40px] leading-[1.05] tracking-[-0.04em] text-ink sm:text-[56px] lg:text-[72px]">{title}</h1>
         </Reveal>
         {intro && (
-          <Reveal delay={160}>
+          <Reveal load delay={160}>
             <p className="mt-5 max-w-2xl text-pretty text-[19px] leading-[1.35] tracking-[-0.015em] text-ink-muted sm:text-[22px]">{intro}</p>
           </Reveal>
         )}
         {children && (
-          <Reveal delay={240} className="flex w-full flex-col items-center [&>*]:justify-center">
+          <Reveal load delay={240} className="flex w-full flex-col items-center [&>*]:justify-center">
             {children}
           </Reveal>
         )}
