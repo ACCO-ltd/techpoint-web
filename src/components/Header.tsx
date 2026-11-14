@@ -41,17 +41,9 @@ function SolutionsMenu() {
 
 export function Header() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   // The menu is tied to the path it was opened on, so navigating closes it.
   const [menuPath, setMenuPath] = useState<string | null>(null);
   const open = menuPath === pathname;
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -61,19 +53,17 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Pages without a dark hero keep the solid header from the start.
-  const solid = (scrolled || pathname === "/contact") && !open;
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        solid ? "border-b border-line bg-white/90 backdrop-blur-xl" : "border-b border-transparent"
+      className={`fixed inset-x-0 top-0 z-50 border-b border-black/[0.08] ${
+        open ? "bg-white" : "bg-white/90 backdrop-blur-xl backdrop-saturate-150"
       }`}
     >
-      <div className="container-x flex h-[72px] items-center justify-between gap-6">
+      <div className="container-x flex h-14 items-center justify-between gap-6">
         <Link href="/" aria-label="Techpoint Solutions — home" className="relative z-10">
-          <Logo tone={solid ? "dark" : "light"} className="h-8 w-auto sm:h-9" />
+          <Logo tone="dark" className="h-7 w-auto" />
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
@@ -86,21 +76,12 @@ export function Header() {
                   <Link
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className={`relative inline-flex items-center gap-1 rounded-full px-3 py-2 text-[15px] font-medium tracking-[-0.01em] transition-colors xl:px-4 ${
-                      solid
-                        ? isActive(item.href)
-                          ? "text-ink"
-                          : "text-ink-soft hover:text-ink"
-                        : isActive(item.href)
-                          ? "text-on-dark"
-                          : "text-on-dark/70 hover:text-on-dark"
+                    className={`inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-[14px] tracking-[-0.01em] transition-colors ${
+                      isActive(item.href) ? "font-semibold text-[#1d1d1f]" : "text-[#1d1d1f]/75 hover:text-[#1d1d1f]"
                     }`}
                   >
                     {item.label}
                     {hasMenu && <Icon name="chevron" className="size-3.5 opacity-60 transition-transform group-hover/menu:rotate-180" />}
-                    {isActive(item.href) && (
-                      <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-brand xl:inset-x-4" aria-hidden="true" />
-                    )}
                   </Link>
                   {hasMenu && <SolutionsMenu />}
                 </li>
@@ -112,12 +93,9 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link
             href="/contact"
-            className={`hidden h-10 items-center gap-2 rounded-full px-5 text-[14px] font-semibold transition-all duration-300 sm:inline-flex ${
-              "bg-brand text-white hover:bg-brand-strong"
-            }`}
+            className="hidden h-8 items-center rounded-full bg-brand px-4 text-[13px] font-medium text-white transition-colors hover:bg-brand-strong sm:inline-flex"
           >
-            Discuss a project
-            <Icon name="arrow" className="size-3.5" />
+            Talk to us
           </Link>
           <button
             type="button"
@@ -125,9 +103,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className={`relative z-10 grid size-10 place-items-center rounded-full ring-1 ring-inset transition-colors lg:hidden ${
-              solid ? "text-ink ring-ink/15" : "text-on-dark ring-white/20"
-            }`}
+            className="relative z-10 grid size-10 place-items-center rounded-full text-[#1d1d1f] lg:hidden"
           >
             <Icon name={open ? "close" : "menu"} className="size-5" />
           </button>
@@ -136,35 +112,30 @@ export function Header() {
 
       <div
         id="mobile-menu"
-        className={`fixed inset-0 -z-10 bg-night transition-[opacity,visibility] duration-500 lg:hidden ${
+        className={`fixed inset-x-0 top-14 bottom-0 bg-white transition-[opacity,visibility] duration-300 lg:hidden ${
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <div className="grid-lines absolute inset-0 opacity-60" aria-hidden="true" />
-        <nav aria-label="Mobile" className="container-x relative flex h-full flex-col pt-28 pb-10">
-          <ul className="space-y-1">
+        <nav aria-label="Mobile" className="container-x flex h-full flex-col overflow-y-auto pt-6 pb-8">
+          <ul>
             {nav.map((item, i) => (
               <li
                 key={item.href}
                 className="transition-all duration-500"
-                style={{ transitionDelay: open ? `${80 + i * 50}ms` : "0ms", opacity: open ? 1 : 0, transform: open ? "none" : "translateY(12px)" }}
+                style={{ transitionDelay: open ? `${60 + i * 40}ms` : "0ms", opacity: open ? 1 : 0, transform: open ? "none" : "translateY(10px)" }}
               >
                 <Link
                   href={item.href}
-                  className="flex items-center justify-between border-b border-night-line py-5 font-display text-3xl font-semibold tracking-[-0.025em] text-on-dark"
+                  className="flex items-center justify-between border-b border-black/[0.08] py-4 font-sans text-[26px] font-semibold tracking-[-0.03em] text-[#1d1d1f]"
                 >
                   {item.label}
-                  <Icon name="arrow" className="size-5 text-brand-light" />
+                  <Icon name="arrow" className="size-5 text-brand" />
                 </Link>
               </li>
             ))}
           </ul>
-          <Link
-            href="/contact"
-            className="mt-auto inline-flex h-14 items-center justify-center gap-2 rounded-full bg-brand text-[16px] font-semibold text-white"
-          >
-            Discuss a project
-            <Icon name="arrow" className="size-4" />
+          <Link href="/contact" className="mt-auto inline-flex h-13 items-center justify-center rounded-full bg-brand py-4 text-[16px] font-medium text-white">
+            Talk to our team
           </Link>
         </nav>
       </div>

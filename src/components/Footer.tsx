@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { company, products, solutions } from "@/content/site";
-import { Icon } from "./Icon";
 import { Logo } from "./Logo";
 
 const columns = [
@@ -26,33 +25,28 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-night text-on-dark">
-      <div className="grid-lines absolute inset-0 opacity-40" aria-hidden="true" />
-      <div className="container-x relative">
-        <div className="grid gap-14 border-b border-night-line py-20 lg:grid-cols-12">
+    <footer className="bg-[#f5f5f7] text-[13px] leading-relaxed text-[#6e6e73]">
+      <div className="container-x py-12">
+        <div className="grid gap-10 border-b border-black/[0.08] pb-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Logo tone="light" className="h-9 w-auto" />
-            <p className="mt-6 font-display text-[20px] leading-snug font-semibold tracking-tight">{company.tagline}</p>
-            <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-on-dark-muted">{company.description}</p>
-            <div className="mt-8 space-y-3 text-[15px]">
-              <a href={`mailto:${company.email}`} className="flex items-center gap-3 text-on-dark/80 transition-colors hover:text-on-dark">
-                <Icon name="mail" className="size-4 text-brand-light" />
+            <Logo tone="dark" className="h-7 w-auto" />
+            <p className="mt-4 max-w-xs">{company.description}</p>
+            <p className="mt-4 text-[#424245]">
+              <a href={`mailto:${company.email}`} className="hover:text-[#1d1d1f] hover:underline">
                 {company.email}
               </a>
-              <p className="flex items-center gap-3 text-on-dark/80">
-                <Icon name="pin" className="size-4 text-brand-light" />
-                {company.location} · Serving East Africa
-              </p>
-            </div>
+              <br />
+              {company.location} · Serving East Africa
+            </p>
           </div>
-          <div className="grid gap-10 sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
+          <div className="grid gap-8 sm:grid-cols-3 lg:col-span-8">
             {columns.map((col) => (
               <div key={col.title}>
-                <p className="text-[13px] font-semibold text-on-dark-muted">{col.title}</p>
-                <ul className="mt-5 space-y-3">
+                <p className="font-semibold text-[#1d1d1f]">{col.title}</p>
+                <ul className="mt-3 space-y-2">
                   {col.links.map((l) => (
                     <li key={l.href}>
-                      <Link href={l.href} className="text-[15px] text-on-dark/75 transition-colors hover:text-on-dark">
+                      <Link href={l.href} className="text-[#424245] hover:text-[#1d1d1f] hover:underline">
                         {l.label}
                       </Link>
                     </li>
@@ -62,15 +56,10 @@ export function Footer() {
             ))}
           </div>
         </div>
-
-        <div aria-hidden="true" className="pointer-events-none select-none overflow-hidden pt-10">
-          <p className="bg-gradient-to-b from-white/[0.1] to-transparent bg-clip-text text-center font-display text-[19vw] leading-[0.8] font-semibold tracking-[-0.05em] text-transparent">
-            Techpoint
+        <div className="flex flex-col gap-2 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            Copyright © {company.name}. All rights reserved.
           </p>
-        </div>
-
-        <div className="flex flex-col gap-3 py-8 text-[13px] text-on-dark-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {company.name}. All rights reserved.</p>
           <p>{company.positioning}</p>
         </div>
       </div>

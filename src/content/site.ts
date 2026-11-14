@@ -25,6 +25,9 @@ export const company = {
   // CONFIRM: production domain
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://techpoint.so",
   email: "info@techpoint.so",
+  // CONFIRM: WhatsApp business number in international format, digits only (e.g. "2526XXXXXXXX").
+  // While empty, WhatsApp links and the floating button are not rendered.
+  whatsapp: "" as string,
   // CONFIRM: city / registered address and phone before publishing them
   location: "Somalia",
   serviceArea: "Somalia and East Africa, with remote delivery for international clients",
@@ -34,12 +37,11 @@ export const company = {
 
 // "Insights" joins the navigation once there are articles to publish.
 export const nav = [
-  { label: "Home", href: "/" },
   { label: "Solutions", href: "/solutions" },
   { label: "Products", href: "/products" },
   { label: "How we work", href: "/how-we-work" },
-  { label: "Company", href: "/company" },
   { label: "Our work", href: "/our-work" },
+  { label: "Company", href: "/company" },
 ] as const;
 
 export type IconName =

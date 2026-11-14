@@ -1,473 +1,474 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ClientMarquee } from "@/components/ClientLogos";
+import { LayerStack } from "@/components/home/LayerStack";
+import { ScrollText } from "@/components/home/ScrollText";
 import { Icon } from "@/components/Icon";
-import { LifecycleDiagram } from "@/components/illustrations/Diagrams";
-import { ProductMockup } from "@/components/illustrations/Mockups";
-import { SystemsMap } from "@/components/illustrations/SystemsMap";
 import { Reveal } from "@/components/Reveal";
-import { CheckList, CtaBand } from "@/components/sections";
-import { Accent, Button, Eyebrow, SectionHeading, StatusPill } from "@/components/ui";
-import { company, deliveryProcess, differentiators, industries, problems, products, solutions } from "@/content/site";
+import { whatsappHref } from "@/components/WhatsAppButton";
+import { clients, company, industries, principles, problems, products, type IconName } from "@/content/site";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="bg-white font-sans text-[17px] leading-[1.47] text-[#1d1d1f] [&_h1]:font-sans [&_h2]:font-sans [&_h3]:font-sans">
       <Hero />
-      <ClientMarquee />
-      <Problems />
-      <Capabilities />
-      <Difference />
-      <Industries />
+      <Clients />
+      <Layers />
       <Products />
-      <Approach />
-      <Partnership />
-      <CtaBand />
-    </>
+      <Replace />
+      <Industries />
+      <Trust />
+      <Company />
+      <Delivery />
+      <Closing />
+    </div>
   );
 }
 
-function Hero() {
-  return (
-    <section className="relative isolate overflow-hidden bg-night text-on-dark">
-      <div className="grid-lines absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_70%_40%,black_20%,transparent_75%)]" aria-hidden="true" />
-      <div
-        className="absolute top-[-20%] right-[-10%] -z-10 size-[60rem] rounded-full bg-[radial-gradient(circle,rgba(91,140,255,0.16),transparent_60%)]"
-        aria-hidden="true"
-      />
-      <div className="container-x grid min-h-[100svh] items-center gap-12 pt-32 pb-20 lg:grid-cols-12 lg:gap-6 lg:pt-28">
-        <div className="lg:col-span-6 xl:col-span-6">
-          <Reveal>
-            <Eyebrow tone="light">{company.positioning}</Eyebrow>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="mt-6 text-balance text-[44px] leading-[1.04] tracking-[-0.03em] sm:text-[56px] lg:text-[64px]">
-              Technology that moves business <Accent>forward.</Accent>
-            </h1>
-          </Reveal>
-          <Reveal delay={160}>
-            <p className="mt-8 max-w-xl text-pretty text-lg leading-relaxed text-on-dark-muted sm:text-xl">
-              We help organizations modernize operations, strengthen digital capabilities, manage risk and grow sustainably — with
-              dependable software, secure infrastructure and practical AI.
-            </p>
-          </Reveal>
-          <Reveal delay={240} className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Button href="/contact" className="h-14 px-8 text-base">
-              Discuss a project
-            </Button>
-            <Button href="/solutions" variant="ghost-light" className="h-14 px-8 text-base">
-              Explore our solutions
-            </Button>
-          </Reveal>
-          <Reveal delay={320}>
-            <dl className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
-              {[
-                ["Outcome-led", "Success agreed up front"],
-                ["Secure by design", "Access, audit, recovery"],
-                ["Long-term", "Support beyond launch"],
-              ].map(([t, d]) => (
-                <div key={t}>
-                  <dt className="text-[15px] font-semibold tracking-tight">{t}</dt>
-                  <dd className="mt-1 text-[13px] leading-snug text-on-dark-muted">{d}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </div>
+/* ---------- shared pieces ---------- */
 
-        <Reveal delay={200} className="relative lg:col-span-6 xl:col-span-6">
-          <div className="relative mx-auto w-full max-w-[620px]">
-            <SystemsMap className="h-auto w-full" />
-            <div className="absolute top-[2%] -left-4 hidden animate-float rounded-xl border border-white/12 bg-night/80 px-4 py-3 shadow-2xl backdrop-blur-md sm:block">
-              <p className="flex items-center gap-2 text-[12px] font-medium">
-                <span className="grid size-5 place-items-center rounded-full bg-brand-light/20 text-brand-light">
-                  <Icon name="check" className="size-3" />
-                </span>
-                Invoice posted to ledger
-              </p>
-              <p className="mt-1 pl-7 text-[12px] text-on-dark-muted">Sales → Finance · 0.4s</p>
-            </div>
-            <div
-              className="absolute -right-4 bottom-[1%] hidden animate-float rounded-xl border border-white/12 bg-night/80 px-4 py-3 shadow-2xl backdrop-blur-md sm:block"
-              style={{ animationDelay: "-4s" }}
-            >
-              <p className="flex items-center gap-2 text-[12px] font-medium">
-                <span className="size-2 rounded-full bg-brand-light animate-pulse-soft" />
-                Approval routed · PO-2041
-              </p>
-              <p className="mt-1 pl-4 text-[12px] text-on-dark-muted">Procurement → Finance lead</p>
-            </div>
-          </div>
-          <p className="mt-2 text-center text-[13px] font-semibold text-on-dark-muted">
-            One connected operating system for your organization
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
+const h2 = "text-balance text-[34px] leading-[1.07] font-semibold tracking-[-0.035em] sm:text-[44px] lg:text-[56px]";
+const sub = "text-pretty text-[19px] leading-[1.35] tracking-[-0.015em] text-[#6e6e73] sm:text-[21px] lg:text-[24px]";
+const tile = "relative overflow-hidden rounded-[28px]";
 
-function Problems() {
-  return (
-    <section className="relative bg-surface py-24 sm:py-32">
-      <div className="container-x grid gap-14 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <div className="lg:sticky lg:top-32">
-            <Reveal>
-              <SectionHeading
-                eyebrow="The problems we solve"
-                title={
-                  <>
-                    Technology should solve <Accent>real</Accent> operational problems.
-                  </>
-                }
-                intro="Many organizations run critical work across disconnected tools, manual processes and fragmented information. We design connected, maintainable systems around the way your business actually operates."
-              />
-            </Reveal>
-            <Reveal delay={120} className="relative mt-10 hidden aspect-[4/3] overflow-hidden rounded-3xl lg:block">
-              <Image src="/images/whiteboard.jpg" alt="Engineer mapping a business workflow on a whiteboard" fill sizes="40vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-night/50 to-transparent" />
-            </Reveal>
-          </div>
-        </div>
-        <ol className="lg:col-span-6 lg:col-start-7">
-          {problems.map((p, i) => (
-            <Reveal as="li" key={p.title} delay={i * 60} className="group border-t border-line py-10 first:border-t-0 first:pt-0 lg:first:pt-4">
-              <div className="flex items-start gap-6">
-                <span className="text-[13px] font-semibold tabular-nums text-ink-muted">0{i + 1}</span>
-                <div className="flex-1">
-                  <div className="flex items-center gap-4">
-                    <span className="grid size-12 place-items-center rounded-2xl bg-brand-tint text-brand transition-colors duration-500 group-hover:bg-ink group-hover:text-on-dark">
-                      <Icon name={p.icon} className="size-5.5" />
-                    </span>
-                    <h3 className="text-[22px] leading-[1.25] tracking-[-0.02em] sm:text-[24px]">{p.title}</h3>
-                  </div>
-                  <p className="mt-5 max-w-lg text-[18px] leading-relaxed text-ink-muted">{p.body}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-          <Reveal className="mt-4 rounded-3xl bg-ink p-8 text-on-dark">
-            <p className="text-[20px] leading-snug font-medium tracking-tight">
-              Our job is to replace that friction with systems your teams trust — and that keep working as you grow.
-            </p>
-            <Link href="/how-we-work" className="mt-5 inline-flex items-center gap-2 text-[15px] font-medium text-brand-light hover:text-on-dark">
-              See how we approach a project
-              <Icon name="arrow" className="size-4" />
-            </Link>
-          </Reveal>
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-function Capabilities() {
-  return (
-    <section className="bg-surface-raised py-24 sm:py-32">
-      <div className="container-x">
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Six strategic practices"
-              title={
-                <>
-                  One partner across your <Accent>entire technology estate.</Accent>
-                </>
-              }
-              intro="From the infrastructure your systems run on to the data your leaders decide with — six practices, delivered by one accountable team."
-            />
-          </Reveal>
-          <Reveal delay={100}>
-            <Button href="/solutions" variant="ghost-dark">
-              All solutions
-            </Button>
-          </Reveal>
-        </div>
-
-        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {solutions.map((s, i) => (
-            <Reveal key={s.slug} delay={(i % 3) * 70} className="h-full">
-              <SolutionTile solution={s} index={i} />
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function SolutionTile({ solution: s, index }: { solution: (typeof solutions)[number]; index: number }) {
-  return (
-    <Link
-      href={`/solutions/${s.slug}`}
-      className="group relative isolate flex h-full min-h-[380px] flex-col overflow-hidden rounded-3xl bg-night p-7 text-on-dark sm:p-8"
-    >
-      <Image
-        src={s.image}
-        alt=""
-        fill
-        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-        className="-z-20 object-cover opacity-40 transition-[transform,opacity] duration-[1.2s] ease-out group-hover:scale-[1.06] group-hover:opacity-30"
-      />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/85 to-night/30" aria-hidden="true" />
-      <div className="flex items-start justify-between">
-        <span className="grid size-11 place-items-center rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md">
-          <Icon name={s.icon} className="size-5 text-brand-light" />
-        </span>
-        <span className="text-[13px] font-semibold tabular-nums text-on-dark-muted">
-          0{index + 1} / 0{solutions.length}
-        </span>
-      </div>
-      <div className="mt-auto pt-16">
-        <h3 className="text-[22px] leading-[1.2] font-semibold tracking-[-0.02em]">{s.name}</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-on-dark-muted">{s.short}</p>
-        <span className="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-brand-light transition-colors group-hover:text-on-dark">
-          Explore the practice
-          <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
-        </span>
-      </div>
+function PillLink({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
+  const cls = "inline-flex h-[46px] items-center rounded-full bg-brand px-6 text-[17px] text-white transition-colors hover:bg-brand-strong";
+  return external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+      {children}
+    </a>
+  ) : (
+    <Link href={href} className={cls}>
+      {children}
     </Link>
   );
 }
 
-/** Corporate profile, page 13: our difference is how we deliver, not simply what we sell. */
-function Difference() {
+function TextLink({ href, children, className = "", external }: { href: string; children: React.ReactNode; className?: string; external?: boolean }) {
+  const cls = `inline-flex items-center gap-1 text-brand hover:underline ${className}`;
+  const inner = (
+    <>
+      {children}
+      <span aria-hidden="true">›</span>
+    </>
+  );
+  return external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+      {inner}
+    </a>
+  ) : (
+    <Link href={href} className={cls}>
+      {inner}
+    </Link>
+  );
+}
+
+function SectionIntro({ eyebrow, title, body }: { eyebrow: string; title: React.ReactNode; body?: string }) {
   return (
-    <section className="relative isolate overflow-hidden bg-night py-24 text-on-dark sm:py-32">
-      <div className="grid-lines absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent)]" aria-hidden="true" />
-      <div className="container-x">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-          <Reveal className="lg:col-span-7">
-            <SectionHeading
-              tone="light"
-              eyebrow="Why Techpoint"
-              title={
-                <>
-                  Our difference is how we deliver, <Accent>not simply what we sell.</Accent>
-                </>
-              }
-            />
-          </Reveal>
-          <Reveal delay={100} className="lg:col-span-5">
-            <p className="text-[18px] leading-relaxed text-on-dark-muted">
-              Many firms can supply technology. We are accountable for whether it works for your organization — from the first
-              requirement to years of support after launch.
-            </p>
-          </Reveal>
-        </div>
-        <ol className="mt-16 grid gap-px overflow-hidden rounded-3xl bg-night-line ring-1 ring-night-line sm:grid-cols-2 lg:grid-cols-5">
-          {differentiators.map((d, i) => (
-            <Reveal as="li" key={d.title} delay={i * 60} className="group flex flex-col bg-night p-7 transition-colors duration-500 hover:bg-night-raised">
-              <div className="flex items-center justify-between">
-                <span className="grid size-11 place-items-center rounded-2xl bg-brand-light/10 text-brand-light ring-1 ring-brand-light/20">
-                  <Icon name={d.icon} className="size-5" />
-                </span>
-                <span className="text-[13px] font-semibold tabular-nums text-on-dark-muted">0{i + 1}</span>
-              </div>
-              <h3 className="mt-10 text-[19px] leading-snug font-semibold tracking-tight">{d.title}</h3>
-              <p className="mt-2.5 text-[14px] leading-relaxed text-on-dark-muted">{d.body}</p>
-            </Reveal>
-          ))}
-        </ol>
+    <Reveal className="mx-auto flex max-w-3xl flex-col items-center gap-3.5 text-center">
+      <p className="text-[15px] font-semibold tracking-[-0.01em] text-brand sm:text-[17px]">{eyebrow}</p>
+      <h2 className={h2}>{title}</h2>
+      {body && <p className={`${sub} max-w-[26em]`}>{body}</p>}
+    </Reveal>
+  );
+}
+
+/* ---------- sections ---------- */
+
+function Hero() {
+  return (
+    <section className="overflow-hidden bg-gradient-to-b from-white from-55% to-[#f5f5f7] pt-28 sm:pt-36">
+      <div className="container-x flex flex-col items-center gap-4 text-center">
+        <Reveal>
+          <p className="text-[15px] font-semibold tracking-[-0.01em] text-brand sm:text-[17px]">Techpoint · Somalia and East Africa</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h1 className="text-balance text-[44px] leading-[1.04] font-semibold tracking-[-0.04em] sm:text-[68px] lg:text-[88px]">
+            Technology that moves business forward.
+          </h1>
+        </Reveal>
+        <Reveal delay={160}>
+          <p className={`${sub} max-w-[26em]`}>Software, secure infrastructure and practical AI for organizations that intend to grow.</p>
+        </Reveal>
+        <Reveal delay={240} className="mt-2 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
+          <PillLink href="/contact">Talk to our team</PillLink>
+          <TextLink href="/solutions" className="text-[19px]">
+            See what we do
+          </TextLink>
+        </Reveal>
+      </div>
+      <div className="mt-4 pb-10 sm:mt-2 md:pb-0">
+        <LayerStack />
       </div>
     </section>
   );
 }
 
-function Industries() {
+function Clients() {
   return (
-    <section className="bg-surface py-24 sm:py-32">
-      <div className="container-x">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Who we serve"
-            title="Built for organizations with real operational complexity."
-            intro="We focus on sectors where dependable systems make a measurable difference to daily operations — across Somalia and East Africa, with delivery standards suited to international clients."
-          />
-        </Reveal>
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {industries.map((ind, i) => (
-            <Reveal key={ind.name} delay={i * 70} className="h-full">
-              <article className="group h-full overflow-hidden rounded-3xl bg-white ring-1 ring-line">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image src={ind.image} alt="" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover transition-transform duration-[1.2s] group-hover:scale-105" />
-                  <span className="absolute bottom-4 left-4 grid size-10 place-items-center rounded-xl bg-surface/95 text-ink shadow-lg backdrop-blur">
-                    <Icon name={ind.icon} className="size-5" />
-                  </span>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-[20px] font-semibold tracking-tight">{ind.name}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{ind.body}</p>
-                </div>
-              </article>
+    <section aria-labelledby="clients-title" className="bg-[#f5f5f7] pt-4 pb-16 sm:pb-20">
+      <div className="container-x flex flex-col items-center gap-7">
+        <p id="clients-title" className="text-[14px] text-[#6e6e73]">
+          Trusted by organizations across Somalia
+        </p>
+        <ul className="flex flex-wrap items-center justify-center gap-x-12 gap-y-7 sm:gap-x-16">
+          {clients.map((c) => {
+            const height = Math.round(c.h * 0.72);
+            return (
+              <li key={c.name}>
+                <Image
+                  src={c.logo}
+                  alt={c.name}
+                  width={Math.round((c.w * height) / 360)}
+                  height={height}
+                  className={`w-auto grayscale ${c.name === "RBM" ? "opacity-70" : "opacity-55 brightness-0"}`}
+                  style={{ height }}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+const layerTiles = [
+  {
+    kicker: "The foundation",
+    name: "Cloud & security",
+    body: "Migration, backup and recovery. Access control, data protection and incident response.",
+    links: [
+      { label: "Cloud", href: "/solutions/cloud-infrastructure" },
+      { label: "Security", href: "/solutions/cybersecurity" },
+    ],
+    fill: "bg-[#1d1d1f]",
+  },
+  {
+    kicker: "Reporting and insight",
+    name: "Data",
+    body: "Integration, management dashboards, reporting and governance leaders can trust.",
+    links: [{ label: "Learn more", href: "/solutions/data-analytics" }],
+    fill: "bg-brand",
+  },
+  {
+    kicker: "Business systems",
+    name: "Software",
+    body: "ERP and business applications, web and mobile, and the integrations between them.",
+    links: [{ label: "Learn more", href: "/solutions/software-development" }],
+    fill: "bg-[#a9c1ff]",
+  },
+  {
+    kicker: "Decision support",
+    name: "AI & automation",
+    body: "Document and workflow automation, and practical AI where it delivers measurable value.",
+    links: [{ label: "Learn more", href: "/solutions/ai-automation" }],
+    fill: "bg-white ring-[3px] ring-brand ring-inset",
+  },
+];
+
+/** Small isometric stack with one layer lifted and filled. */
+function MiniStack({ active, fill }: { active: number; fill: string }) {
+  return (
+    <div aria-hidden="true" className="relative mx-auto h-[210px] w-[260px] transition-transform duration-500 ease-out-expo group-hover:-translate-y-2">
+      {[0, 1, 2, 3].map((i) => (
+        <span
+          key={i}
+          className={`absolute left-[50px] size-40 rounded-[34px] [transform:rotateX(60deg)_rotateZ(45deg)] ${
+            i === active ? `${fill} shadow-[0_30px_34px_-14px_rgba(31,94,255,0.5)]` : "bg-white/60 ring-[1.5px] ring-black/10 ring-inset"
+          }`}
+          style={{ top: 92 - i * 30 - (i === active ? 14 : 0) }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function Layers() {
+  return (
+    <section className="bg-white py-16 sm:py-32">
+      <div className="container-x max-w-[1148px]">
+        <SectionIntro
+          eyebrow="What we do"
+          title={
+            <>
+              Four layers.
+              <br />
+              One accountable team.
+            </>
+          }
+          body="Every organization's technology sits in these four layers. We work across all of them."
+        />
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
+          {layerTiles.map((l, i) => (
+            <Reveal key={l.name} delay={(i % 2) * 90} className={`${tile} group flex flex-col items-center gap-2.5 bg-[#f5f5f7] px-7 pt-9 text-center sm:min-h-[480px] sm:px-12 sm:pt-12`}>
+              <p className="text-[14px] font-semibold text-[#6e6e73]">{l.kicker}</p>
+              <h3 className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em] sm:text-[32px]">{l.name}</h3>
+              <p className="max-w-[20em] text-[17px] leading-[1.35] text-[#6e6e73] sm:text-[19px]">{l.body}</p>
+              <p className="flex gap-5">
+                {l.links.map((link) => (
+                  <TextLink key={link.href} href={link.href}>
+                    {link.label}
+                  </TextLink>
+                ))}
+              </p>
+              <div className="-mb-6 mt-auto scale-75 sm:mb-0 sm:scale-100">
+                <MiniStack active={i} fill={l.fill} />
+              </div>
             </Reveal>
           ))}
+          <Reveal className={`${tile} flex flex-col gap-3 bg-[#f5f5f7] px-8 py-9 md:col-span-2 md:flex-row md:items-center md:gap-8 md:px-12`}>
+            <h3 className="text-[28px] font-semibold tracking-[-0.03em] whitespace-nowrap sm:text-[32px]">Managed IT</h3>
+            <p className="text-[17px] leading-[1.35] text-[#6e6e73] sm:text-[19px]">
+              Strategy, procurement, support and training across every layer, for as long as you run the system.
+            </p>
+            <TextLink href="/solutions/it-consulting" className="whitespace-nowrap md:ml-auto">
+              How we support you
+            </TextLink>
+          </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+function StatusDot({ status }: { status: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#6e6e73]">
+      <span className={`size-[7px] rounded-full ${status === "Live" ? "bg-[#30b158]" : "bg-brand"}`} />
+      {status}
+    </span>
   );
 }
 
 function Products() {
-  const [featured, ...others] = products;
+  const [flagship, ...rest] = products;
   return (
-    <section className="relative isolate overflow-hidden bg-night py-24 text-on-dark sm:py-32">
-      <div className="grid-lines absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]" aria-hidden="true" />
-      <div className="container-x">
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <Reveal>
-            <SectionHeading
-              tone="light"
-              eyebrow="Software portfolio"
-              title={
-                <>
-                  Purpose-built products. <Accent>One engineering mindset.</Accent>
-                </>
-              }
-              intro="Alongside consulting and implementation, we build and operate our own software. Each product has a clear purpose, audience and availability status."
-            />
-          </Reveal>
-          <Reveal delay={100}>
-            <Button href="/products" variant="ghost-light">
-              View portfolio
-            </Button>
-          </Reveal>
-        </div>
-
-        <Reveal className="mt-16">
-          <Link
-            href={`/products/${featured.slug}`}
-            className="group grid overflow-hidden rounded-4xl border border-white/10 bg-gradient-to-br from-ink/80 to-night/60 lg:grid-cols-12"
-          >
-            <div className="flex flex-col p-8 sm:p-12 lg:col-span-5">
-              <div className="flex items-center gap-3">
-                <StatusPill status={featured.status} tone="light" />
-                <span className="text-[13px] font-semibold text-on-dark-muted">{featured.category}</span>
-              </div>
-              <h3 className="mt-8 text-[30px] leading-[1.15] tracking-[-0.025em] sm:text-[36px]">{featured.name}</h3>
-              <p className="mt-1 text-[18px] text-on-dark-muted">{featured.tagline}</p>
-              <p className="mt-6 text-[15px] leading-relaxed text-on-dark-muted">{featured.summary}</p>
-              <span className="mt-auto inline-flex items-center gap-2 pt-10 text-[15px] font-medium text-on-dark">
-                Explore {featured.name}
-                <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
-              </span>
+    <section className="bg-[#f5f5f7] py-16 sm:py-32">
+      <div className="container-x max-w-[1148px]">
+        <SectionIntro
+          eyebrow="Products"
+          title={
+            <>
+              Software we build
+              <br />
+              and run ourselves.
+            </>
+          }
+        />
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
+          <div className={`${tile} flex flex-col items-center gap-3 bg-white px-6 pt-14 text-center md:col-span-2`}>
+            <StatusDot status={flagship.status} />
+            <h3 className={h2}>{flagship.name}</h3>
+            <p className="text-[19px] leading-[1.3] text-[#6e6e73] sm:text-[22px]">{flagship.tagline}</p>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+              <PillLink href={`/products/${flagship.slug}`}>Explore {flagship.name}</PillLink>
+              <TextLink href="/contact" className="text-[19px]">
+                Book a demo
+              </TextLink>
             </div>
-            <div className="relative px-6 pb-0 sm:px-12 lg:col-span-7 lg:pt-12 lg:pr-0">
-              <ProductMockup
-                product={featured}
-                className="translate-y-6 transition-transform duration-700 group-hover:translate-y-2 lg:rounded-r-none"
+            <div className="scroll-grow mt-10 w-full max-w-[900px]">
+              <Image
+                src="/products/sukaan-dashboard.png"
+                alt="Sukaan dashboard showing apartments, occupancy and collections, with client details blurred"
+                width={1017}
+                height={640}
+                sizes="(min-width: 960px) 900px, 100vw"
+                className="h-auto w-full rounded-t-[18px] shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_40px_80px_-30px_rgba(0,0,0,0.35)]"
               />
             </div>
-          </Link>
-        </Reveal>
-
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          {others.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 80}>
-              <Link
-                href={`/products/${p.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-4xl border border-white/10 bg-white/[0.035] transition-colors hover:bg-white/[0.06]"
-              >
-                <div className="p-8 sm:p-10">
-                  <div className="flex items-center gap-3">
-                    <StatusPill status={p.status} tone="light" />
-                    <span className="text-[13px] font-semibold text-on-dark-muted">{p.category}</span>
-                  </div>
-                  <h3 className="mt-6 text-[22px] leading-[1.25] tracking-[-0.02em] sm:text-[24px]">{p.name}</h3>
-                  <p className="mt-3 max-w-md text-[15px] leading-relaxed text-on-dark-muted">{p.summary}</p>
-                </div>
-                <div className="mt-auto px-8 sm:px-10">
-                  <ProductMockup product={p} className="translate-y-4 rounded-b-none transition-transform duration-700 group-hover:translate-y-1" />
-                </div>
-              </Link>
+          </div>
+          {rest.map((p, i) => (
+            <Reveal key={p.slug} delay={i * 90} className={`${tile} flex flex-col items-center gap-3 bg-white px-8 py-10 text-center sm:min-h-[300px] sm:py-14`}>
+              <StatusDot status={p.status} />
+              <h3 className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em] sm:text-[32px]">{p.name}</h3>
+              <p className="max-w-[19em] text-[17px] leading-[1.35] text-[#6e6e73] sm:text-[19px]">{p.tagline}</p>
+              <TextLink href={`/products/${p.slug}`}>Learn more</TextLink>
             </Reveal>
           ))}
         </div>
-        <p className="mt-6 text-[13px] font-semibold text-on-dark-muted">Sukaan is shown from the live product, with client details blurred. Other previews are illustrative and use sample data.</p>
       </div>
     </section>
   );
 }
 
-function Approach() {
+const replacements = ["Entered once, used everywhere", "Routed, tracked and recorded", "Live figures from one source", "Staged migration with rollback"];
+
+function Replace() {
   return (
-    <section className="bg-surface py-24 sm:py-32">
-      <div className="container-x">
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <Reveal>
-            <SectionHeading
-              eyebrow="How we work"
-              title={
-                <>
-                  A disciplined approach <Accent>from day one.</Accent>
-                </>
-              }
-              intro="Every engagement follows a clear delivery lifecycle, so you always know what is happening, what comes next and what you will receive."
-            />
-          </Reveal>
-          <Reveal delay={100}>
-            <Button href="/how-we-work" variant="ghost-dark">
-              Our delivery process
-            </Button>
-          </Reveal>
-        </div>
-        <ol className="mt-16 grid gap-px overflow-hidden rounded-3xl bg-line ring-1 ring-line sm:grid-cols-2 lg:grid-cols-4">
-          {deliveryProcess.map((step, i) => (
-            <Reveal as="li" key={step.n} delay={(i % 4) * 70} className="group relative bg-surface p-7 transition-colors duration-500 hover:bg-white sm:p-8">
-              <div className="flex items-center justify-between">
-                <span className="text-[13px] font-semibold tabular-nums text-brand">{step.n}</span>
-                <span className="grid size-10 place-items-center rounded-xl bg-brand-tint text-brand transition-all duration-500 group-hover:bg-ink group-hover:text-on-dark">
-                  <Icon name={step.icon} className="size-[18px]" />
-                </span>
+    <section className="bg-white py-16 sm:py-32">
+      <div className="container-x max-w-[1148px]">
+        <ScrollText
+          className="max-w-[19em] text-[30px] leading-[1.12] font-semibold tracking-[-0.035em] sm:text-[40px] lg:text-[48px]"
+          segments={[
+            { text: "Many organizations run on spreadsheets, paper and WhatsApp." },
+            { text: "We replace them with one system your teams trust,", strong: true },
+            { text: "and that keeps working as you grow." },
+          ]}
+        />
+        <ul className="mt-10 grid gap-x-8 gap-y-8 sm:mt-16 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
+          {problems.map((p, i) => (
+            <Reveal as="li" key={p.title} delay={i * 70}>
+              <h3 className="text-[21px] font-semibold tracking-[-0.02em]">{p.title}</h3>
+              <p className="mt-2 text-[16px] text-[#6e6e73]">{p.body}</p>
+              <p className="mt-3 text-[16px] font-medium text-brand">{replacements[i]}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+const sectors: { name: string; body: string; icon: IconName }[] = [
+  { name: "Property", body: "Leases, rent collection, owner reporting and maintenance.", icon: "building" },
+  ...industries.map((i) => ({ name: i.name, body: i.body, icon: i.name === "Construction" ? ("factory" as IconName) : i.icon })),
+];
+
+function Industries() {
+  return (
+    <section className="bg-[#f5f5f7] py-16 sm:py-32">
+      <div className="container-x max-w-[1148px]">
+        <SectionIntro eyebrow="Who we serve" title="Built for organizations with real operational complexity." />
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-5 lg:grid-cols-5">
+          {sectors.map((s, i) => (
+            <Reveal as="li" key={s.name} delay={i * 60} className={`${tile} flex flex-col gap-2 bg-white p-5 last:col-span-2 sm:p-7 lg:last:col-span-1`}>
+              <span className="mb-3 grid size-11 place-items-center rounded-2xl bg-brand-tint text-brand">
+                <Icon name={s.icon} className="size-5" />
+              </span>
+              <h3 className="text-[19px] font-semibold tracking-[-0.02em]">{s.name}</h3>
+              <p className="text-[15px] leading-[1.4] text-[#6e6e73]">{s.body}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+const trustTitles = ["Security as a default", "Your data stays yours", "Tested before it ships", "Documented and handed over"];
+const trust = trustTitles.map((t) => principles.find((p) => p.title === t)).filter((p) => p !== undefined);
+
+function Trust() {
+  return (
+    <section className="bg-white py-16 sm:py-32">
+      <div className="container-x max-w-[1148px]">
+        <SectionIntro eyebrow="Security and trust" title="Built in from the first line." body="These commitments apply to every system we deliver and every product we run." />
+        <ul className="mt-10 grid gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-5">
+          {trust.map((p, i) => (
+            <Reveal as="li" key={p.title} delay={(i % 2) * 90} className={`${tile} flex gap-5 bg-[#f5f5f7] p-8 sm:p-10`}>
+              <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-white text-brand ring-1 ring-black/[0.06]">
+                <Icon name={p.icon} className="size-[22px]" />
+              </span>
+              <div>
+                <h3 className="text-[22px] font-semibold tracking-[-0.02em]">{p.title}</h3>
+                <p className="mt-2 text-[17px] leading-[1.4] text-[#6e6e73]">{p.body}</p>
               </div>
-              <h3 className="mt-10 text-[20px] font-semibold tracking-[-0.025em]">{step.title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-ink-muted">{step.body}</p>
+            </Reveal>
+          ))}
+        </ul>
+        <p className="mt-8 text-center">
+          <TextLink href="/how-we-work">How we work</TextLink>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+const figures = [
+  { value: clients.length, label: "organizations on our systems" },
+  { value: products.length, label: "products built in-house" },
+  { value: 4, label: "layers, one accountable team" },
+];
+
+function Company() {
+  return (
+    <section className="bg-[#f5f5f7] py-16 sm:py-32">
+      <div className="container-x max-w-[1148px]">
+        <SectionIntro
+          eyebrow="The company"
+          title={
+            <>
+              A team you can
+              <br />
+              call by name.
+            </>
+          }
+        />
+        <div className="mt-14 grid gap-5">
+          <div className={`${tile} scroll-rise h-[380px] text-white sm:h-[560px]`}>
+            <Image src="/images/team-laptops.jpg" alt="" fill sizes="(min-width: 1148px) 1100px, 100vw" className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/0 from-35% to-black/75" aria-hidden="true" />
+            <div className="absolute inset-x-7 bottom-8 flex flex-col gap-4 sm:inset-x-14 sm:bottom-12 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+              <h3 className={`${h2} max-w-[10em]`}>Built here. Supported here.</h3>
+              <p className="max-w-[22em] text-[17px] leading-[1.4] text-white/85 sm:text-[19px]">
+                Based in {company.location} and working across East Africa. We agree success in writing, build in the open, and stay after launch.
+              </p>
+            </div>
+          </div>
+          <ul className="grid grid-cols-3 gap-3 sm:gap-5">
+            {figures.map((f, i) => (
+              <Reveal as="li" key={f.label} delay={i * 80} className={`${tile} bg-white px-2 py-7 text-center sm:px-5 sm:py-11`}>
+                <span className="block text-[44px] leading-none font-semibold tracking-[-0.045em] sm:text-[80px]">{f.value}</span>
+                <span className="mt-2 block text-[12.5px] leading-tight text-[#6e6e73] sm:text-[17px]">{f.label}</span>
+              </Reveal>
+            ))}
+          </ul>
+          <p className="mt-3 text-center">
+            <TextLink href="/company">About Techpoint</TextLink>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const phases = [
+  { title: "Discover", body: "Objectives, users, systems and constraints, before anything is proposed." },
+  { title: "Design", body: "Requirements and architecture your stakeholders sign off in plain language." },
+  { title: "Build", body: "Short iterations, working software at every milestone, tested before go-live." },
+  { title: "Run", body: "Training, monitoring and improvement for as long as you use the system." },
+];
+
+function Delivery() {
+  return (
+    <section className="bg-white py-16 sm:py-32">
+      <div className="container-x max-w-[1148px]">
+        <SectionIntro eyebrow="How we deliver" title="Four phases. No surprises." />
+        <ol className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-5 lg:grid-cols-4">
+          {phases.map((p, i) => (
+            <Reveal as="li" key={p.title} delay={i * 80} className={`${tile} bg-[#f5f5f7] px-5 py-6 sm:min-h-[230px] sm:px-7 sm:py-8`}>
+              <span className="text-[15px] font-semibold text-brand">{i + 1}</span>
+              <h3 className="mt-2.5 text-[26px] font-semibold tracking-[-0.03em]">{p.title}</h3>
+              <p className="mt-2.5 text-[16px] text-[#6e6e73]">{p.body}</p>
             </Reveal>
           ))}
         </ol>
+        <p className="mt-8 text-center">
+          <TextLink href="/how-we-work">Our full delivery process</TextLink>
+        </p>
       </div>
     </section>
   );
 }
 
-function Partnership() {
+function Closing() {
   return (
-    <section className="bg-surface-raised py-24 sm:py-32">
-      <div className="container-x grid items-center gap-14 lg:grid-cols-2">
-        <Reveal className="order-2 lg:order-1">
-          <LifecycleDiagram className="mx-auto w-full max-w-[520px]" />
-        </Reveal>
-        <div className="order-1 lg:order-2">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Beyond launch"
-              title={
-                <>
-                  A technology partner, <Accent>not a one-off vendor.</Accent>
-                </>
-              }
-              intro="Business systems are never really finished. We stay involved after go-live — keeping your systems healthy, secure and aligned with how your organization is changing."
-            />
-          </Reveal>
-          <Reveal delay={100}>
-            <CheckList
-              className="mt-10"
-              items={[
-                "Monitoring, maintenance and security updates",
-                "Enhancements prioritized with your stakeholders",
-                "New integrations as your ecosystem grows",
-                "Training for new staff and new modules",
-              ]}
-            />
-          </Reveal>
-          <Reveal delay={160} className="mt-10">
-            <Button href="/solutions/it-consulting" variant="dark">
-              Managed technology services
-            </Button>
-          </Reveal>
+    <section className="bg-[#f5f5f7] py-20 sm:py-36">
+      <Reveal className="container-x flex flex-col items-center gap-4 text-center">
+        <h2 className="text-balance text-[38px] leading-[1.05] font-semibold tracking-[-0.04em] sm:text-[56px] lg:text-[72px]">
+          Let&apos;s talk about what your organization needs.
+        </h2>
+        <p className={`${sub} max-w-[26em]`}>The first conversation is about your requirements, and deciding together whether we&apos;re the right fit.</p>
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
+          <PillLink href="/contact">Talk to our team</PillLink>
+          {whatsappHref && (
+            <TextLink href={whatsappHref} external className="text-[19px]">
+              Message us on WhatsApp
+            </TextLink>
+          )}
         </div>
-      </div>
+        <p className="text-[14px] text-[#6e6e73]">Response within {company.responseTime}</p>
+      </Reveal>
     </section>
   );
 }
