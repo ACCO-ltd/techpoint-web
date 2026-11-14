@@ -45,15 +45,15 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             All products
           </Link>
           <div className="mx-auto mt-10 max-w-3xl text-center">
-            <Reveal className="flex flex-wrap items-center justify-center gap-3">
+            <Reveal load className="flex flex-wrap items-center justify-center gap-3">
               <StatusPill status={p.status} tone="light" />
               <span className="text-[13px] font-semibold text-on-dark-muted">{p.category}</span>
             </Reveal>
-            <Reveal delay={80}>
+            <Reveal load delay={80}>
               <h1 className="mt-6 text-[40px] leading-[1.08] tracking-[-0.025em] sm:text-[48px] lg:text-[56px]">{p.name}</h1>
               <p className="mt-2 text-[18px] text-on-dark-muted sm:text-[20px]">{p.tagline}</p>
             </Reveal>
-            <Reveal delay={160}>
+            <Reveal load delay={160}>
               <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-on-dark-muted">{p.summary}</p>
               <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
                 {p.externalUrl ? (
@@ -67,8 +67,10 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               </div>
             </Reveal>
           </div>
-          <Reveal delay={240} className="mx-auto mt-16 max-w-5xl">
-            <ProductMockup product={p} className="translate-y-px rounded-b-none" />
+          <Reveal load delay={240} className="mx-auto mt-16 max-w-5xl">
+            <div className="scroll-tilt-top">
+              <ProductMockup product={p} className="translate-y-px rounded-b-none" />
+            </div>
           </Reveal>
         </div>
       </section>

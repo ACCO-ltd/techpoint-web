@@ -61,6 +61,7 @@ export function Header() {
         open ? "bg-white" : "bg-white/90 backdrop-blur-xl backdrop-saturate-150"
       }`}
     >
+      <span aria-hidden="true" className="scroll-progress pointer-events-none absolute inset-x-0 -bottom-px h-0.5 bg-brand" />
       <div className="container-x flex h-14 items-center justify-between gap-6">
         <Link href="/" aria-label="Techpoint Solutions — home" className="relative z-10">
           <Logo tone="dark" className="h-7 w-auto" />

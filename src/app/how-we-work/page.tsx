@@ -42,7 +42,8 @@ export default function HowWeWorkPage() {
       <section className="bg-surface py-20 sm:py-28">
         <div className="container-x">
           <ol className="relative">
-            <span className="absolute top-0 bottom-0 left-[23px] w-px bg-gradient-to-b from-brand-light via-line to-transparent sm:left-[27px]" aria-hidden="true" />
+            <span className="absolute top-0 bottom-0 left-[23px] w-px bg-line sm:left-[27px]" aria-hidden="true" />
+            <span className="scroll-line absolute top-0 bottom-0 left-[22px] w-[3px] rounded-full bg-brand sm:left-[26px]" aria-hidden="true" />
             {deliveryProcess.map((step, i) => (
               <Reveal as="li" key={step.n} className="relative grid gap-6 pb-16 pl-16 last:pb-0 sm:pl-20 lg:grid-cols-12">
                 <span className="absolute top-0 left-0 grid size-12 place-items-center rounded-2xl bg-ink text-brand-light ring-8 ring-surface sm:size-14">
