@@ -41,13 +41,10 @@ export function Button({ href, children, variant = "primary", className = "", ex
   );
 }
 
-/** Section label: 13px, the only size at which the brand allows all caps. */
+/** Section label above a heading. */
 export function Eyebrow({ children, tone = "dark", className = "" }: { children: React.ReactNode; tone?: "dark" | "light"; className?: string }) {
   return (
-    <p className={`flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.06em] ${tone === "light" ? "text-brand-light" : "text-brand"} ${className}`}>
-      <span className={`size-1.5 rounded-full ${tone === "light" ? "bg-brand-light" : "bg-brand"}`} />
-      {children}
-    </p>
+    <p className={`flex items-center text-[15px] font-semibold tracking-[-0.01em] ${tone === "light" ? "text-brand-light" : "text-brand"} ${className}`}>{children}</p>
   );
 }
 
@@ -69,10 +66,10 @@ export function SectionHeading({
   return (
     <div className={`${align === "center" ? "mx-auto text-center [&>p:first-child]:justify-center" : ""} max-w-2xl ${className}`}>
       {eyebrow && <Eyebrow tone={tone}>{eyebrow}</Eyebrow>}
-      <h2 className={`mt-4 text-balance text-[30px] leading-[1.15] tracking-[-0.025em] sm:text-[36px] ${tone === "light" ? "text-on-dark" : "text-ink"}`}>
+      <h2 className={`mt-3 text-balance text-[32px] leading-[1.08] tracking-[-0.035em] sm:text-[44px] ${tone === "light" ? "text-on-dark" : "text-ink"}`}>
         {title}
       </h2>
-      {intro && <p className={`mt-4 text-pretty text-[18px] leading-[28px] ${tone === "light" ? "text-on-dark-muted" : "text-ink-muted"}`}>{intro}</p>}
+      {intro && <p className={`mt-4 text-pretty text-[19px] leading-[1.4] tracking-[-0.01em] sm:text-[21px] ${tone === "light" ? "text-on-dark-muted" : "text-ink-muted"}`}>{intro}</p>}
     </div>
   );
 }
@@ -97,7 +94,7 @@ const statusStylesDark: Record<ProductStatus, string> = {
 export function StatusPill({ status, tone = "dark" }: { status: ProductStatus; tone?: "dark" | "light" }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold ring-1 ring-inset ${tone === "light" ? statusStylesDark[status] : statusStyles[status]}`}
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap ring-1 ring-inset ${tone === "light" ? statusStylesDark[status] : statusStyles[status]}`}
     >
       <span className={`size-1.5 rounded-full bg-current ${status === "Live" ? "animate-pulse-soft" : ""}`} />
       {status}

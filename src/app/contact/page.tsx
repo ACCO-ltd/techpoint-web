@@ -29,7 +29,7 @@ export default function ContactPage() {
               you need.
             </p>
 
-            <div className="mt-12 hidden space-y-6 border-t border-white/10 pt-10 lg:block">
+            <div className="mt-12 hidden space-y-6 border-t border-black/[0.08] pt-10 lg:block">
               <p className="text-[13px] font-semibold text-on-dark-muted">What happens next</p>
               {[
                 ["Review", `We read every enquiry and respond within ${company.responseTime}.`],
@@ -37,7 +37,7 @@ export default function ContactPage() {
                 ["Proposal", "A clear recommendation for the right first step — or an honest referral."],
               ].map(([t, d], i) => (
                 <div key={t} className="flex gap-4">
-                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white/8 text-[13px] font-semibold tabular-nums text-brand-light ring-1 ring-white/15">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white text-[13px] font-semibold tabular-nums text-brand-light ring-1 ring-black/10">
                     {i + 1}
                   </span>
                   <div>

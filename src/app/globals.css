@@ -6,40 +6,42 @@
   --color-brand: #1f5eff;
   --color-brand-strong: #1747c7;
   --color-brand-tint: #e8eeff;
-  /* Brand on dark grounds only */
-  --color-brand-light: #5b8cff;
-  --color-brand-light-strong: #8aaeff;
+  /* Accent inside "night" sections. Night is now a light grey ground, so this is the brand blue;
+     real dark tiles (.bg-ink) switch it back to the light tint below. */
+  --color-brand-light: #1f5eff;
+  --color-brand-light-strong: #1747c7;
 
-  --color-ink: #0b1220;
-  --color-ink-soft: #2a3445;
-  --color-ink-muted: #5b6475;
+  --color-ink: #1d1d1f;
+  --color-ink-soft: #424245;
+  --color-ink-muted: #6e6e73;
 
   --color-surface: #ffffff;
-  --color-surface-raised: #f4f6fa;
-  --color-line: #e2e6ee;
+  --color-surface-raised: #f5f5f7;
+  --color-line: #e5e5ea;
 
   /* Success / "live" only. Never in the logo. */
   --color-signal: #00b37e;
-  --color-signal-light: #2fd49e;
+  --color-signal-light: #00875f;
 
-  /* Dark grounds */
-  --color-night: #0b1220;
-  --color-night-raised: #151d2e;
-  --color-night-line: #263047;
-  --color-on-dark: #f4f6fa;
-  --color-on-dark-muted: #98a2b3;
+  /* "Night" sections are the light grey ground of the redesign; the names are kept so existing
+     section markup keeps working. */
+  --color-night: #f5f5f7;
+  --color-night-raised: #ffffff;
+  --color-night-line: #dcdce0;
+  --color-on-dark: #1d1d1f;
+  --color-on-dark-muted: #6e6e73;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* radius-sm 6 · radius-md 11 · radius-pill 999 */
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 11px;
-  --radius-2xl: 11px;
-  --radius-3xl: 11px;
-  --radius-4xl: 16px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 24px;
+  --radius-4xl: 28px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -98,6 +100,7 @@
   h3 {
     font-family: var(--font-display);
     font-weight: 600;
+    letter-spacing: -0.03em;
   }
   ::selection {
     background: var(--color-brand-tint);
@@ -123,12 +126,20 @@
     }
   }
 
-  /* Fine engineering grid used on dark grounds */
+  /* Retired decorative grid; kept as a no-op so existing markup is unaffected. */
   .grid-lines {
-    background-image:
-      linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
+    background-image: none;
+  }
+
+  /* Genuinely dark tiles keep light text and the light accent. */
+  .bg-ink {
+    --color-on-dark: #f5f5f7;
+    --color-on-dark-muted: #a1a1a6;
+    --color-brand-light: #7ea2ff;
+    --color-brand-light-strong: #a9c1ff;
+    --color-signal-light: #30d158;
+    --color-night-raised: #2c2c2e;
+    --color-night-line: #3a3a3c;
   }
 
   .reveal {
