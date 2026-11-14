@@ -31,7 +31,7 @@ export default function ProductsPage() {
         }
         intro="Each product addresses a specific operational need. We're clear about what's live, what's in pilot and what's still being built."
       >
-        <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/10 pt-8">
+        <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-black/[0.08] pt-8">
           {(Object.keys(statusNotes) as ProductStatus[]).map((s) => (
             <li key={s} className="flex items-center gap-3">
               <StatusPill status={s} tone="light" />

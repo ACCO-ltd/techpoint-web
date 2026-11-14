@@ -25,7 +25,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#f5f5f7] text-[13px] leading-relaxed text-[#6e6e73]">
+    <footer className="border-t border-black/[0.08] bg-[#f5f5f7] text-[13px] leading-relaxed text-[#6e6e73]">
       <div className="container-x py-12">
         <div className="grid gap-10 border-b border-black/[0.08] pb-10 lg:grid-cols-12">
           <div className="lg:col-span-4">

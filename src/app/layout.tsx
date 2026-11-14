@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Inter_Tight } from "next/font/google";
+import { Inter } from "next/font/google";
 import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -8,7 +8,6 @@ import { company, solutions } from "@/content/site";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["latin"], weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(company.url),
@@ -49,7 +48,7 @@ const organizationJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} antialiased`}>
       <body className="flex min-h-screen flex-col">
         <a
           href="#main"

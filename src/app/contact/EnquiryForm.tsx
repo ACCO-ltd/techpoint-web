@@ -135,7 +135,7 @@ export function EnquiryForm() {
                   required
                   className="peer sr-only"
                 />
-                <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-tint text-brand transition-colors peer-checked:bg-ink peer-checked:text-on-dark">
+                <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-tint text-brand transition-colors peer-checked:bg-ink peer-checked:text-white">
                   <Icon name={t.icon} className="size-5" />
                 </span>
                 <span>
@@ -333,7 +333,7 @@ function ChipGroup({
         {options.map((o) => (
           <label
             key={o}
-            className="cursor-pointer rounded-full bg-white px-4 py-2.5 text-[14px] text-ink-muted ring-1 ring-line transition-all hover:ring-brand/30 has-[:checked]:bg-ink has-[:checked]:text-on-dark has-[:checked]:ring-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand-light"
+            className="cursor-pointer rounded-full bg-white px-4 py-2.5 text-[14px] text-ink-muted ring-1 ring-line transition-all hover:ring-brand/30 has-[:checked]:bg-ink has-[:checked]:text-white has-[:checked]:ring-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand-light"
           >
             <input type="radio" name={name} value={o} checked={value === o} onChange={onChange} className="sr-only" />
             {o}

@@ -75,7 +75,7 @@ export default function OurWorkPage() {
                 {featured.paymentMethods && (
                   <ul className="mt-8 flex flex-wrap gap-2">
                     {featured.paymentMethods.map((m) => (
-                      <li key={m} className="rounded-full border border-white/15 px-3 py-1.5 text-[12px] text-on-dark/85">
+                      <li key={m} className="rounded-full border border-black/10 px-3 py-1.5 text-[12px] text-on-dark/85">
                         {m}
                       </li>
                     ))}

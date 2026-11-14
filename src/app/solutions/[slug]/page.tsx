@@ -84,7 +84,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
           <div className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-line ring-1 ring-line sm:grid-cols-2 lg:grid-cols-3">
             {s.capabilities.map((c, i) => (
               <Reveal key={c.title} delay={(i % 3) * 70} className="group bg-surface p-8 transition-colors hover:bg-white">
-                <span className="grid size-11 place-items-center rounded-2xl bg-brand-tint text-brand transition-colors group-hover:bg-ink group-hover:text-on-dark">
+                <span className="grid size-11 place-items-center rounded-2xl bg-brand-tint text-brand transition-colors group-hover:bg-ink group-hover:text-white">
                   <Icon name={c.icon} className="size-5" />
                 </span>
                 <h3 className="mt-8 text-[20px] font-semibold tracking-tight">{c.title}</h3>
@@ -131,17 +131,17 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
             <CheckList tone="light" className="mt-10" items={s.deliverables} />
           </Reveal>
           <Reveal delay={100} className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+            <div className="rounded-3xl border border-black/[0.08] bg-white p-8">
               <p className="text-[13px] font-semibold text-on-dark-muted">Well suited to</p>
               <ul className="mt-5 flex flex-wrap gap-2">
                 {s.idealFor.map((x) => (
-                  <li key={x} className="rounded-full border border-white/15 px-4 py-2 text-[14px] text-on-dark/85">
+                  <li key={x} className="rounded-full border border-black/10 px-4 py-2 text-[14px] text-on-dark/85">
                     {x}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+            <div className="rounded-3xl border border-black/[0.08] bg-white p-8">
               <p className="text-[13px] font-semibold text-on-dark-muted">Delivery lifecycle</p>
               <ol className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-3 text-[14px] text-on-dark/85">
                 {deliveryProcess.map((p, i) => (
